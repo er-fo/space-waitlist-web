@@ -1,0 +1,273 @@
+{
+  "designSystem": {
+    "colorPalette": {
+      "backgrounds": {
+        "primary": "#1E1E1E",
+        "surface": "#252526",
+        "gradient": {
+          "core": "linear-gradient(180deg, #1E1E1E 0%, #232538 100%)",
+          "cyan_blue": "linear-gradient(135deg, #0BA5EC 0%, #0069CB 100%)",
+          "purple_violet": "linear-gradient(135deg, #8B5CF6 0%, #4B32B7 100%)",
+          "pink_fuchsia": "linear-gradient(135deg, #F472B6 0%, #C026D3 100%)"
+        },
+        "backdrop_blur": "rgba(37, 37, 38, 0.3)"
+      },
+      "text": {
+        "primary": "#E0E0E0",
+        "secondary": "#A1A1AA",
+        "ghost": "rgba(224, 224, 224, 0.6)",
+        "on_accent": "#FFFFFF"
+      },
+      "accents": {
+        "primary": "#0BA5EC",
+        "focus": "#8B5CF6",
+        "success": "#6EE7B7",
+        "error": "#F87171"
+      },
+      "borders": {
+        "panel": "#3E3E42",
+        "subtle": "rgba(224, 224, 224, 0.1)"
+      }
+    },
+    "typography": {
+      "fonts": {
+        "primary": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        "mono": "'JetBrains Mono', 'IBM Plex Mono', 'SF Mono', monospace"
+      },
+      "hierarchy": {
+        "hero": {
+          "fontSize": "clamp(2.5rem, 5vw, 3.5rem)",
+          "fontWeight": "700",
+          "lineHeight": "1.2",
+          "letterSpacing": "-0.02em",
+          "fontFamily": "mono"
+        },
+        "headline": {
+          "fontSize": "2rem",
+          "fontWeight": "700",
+          "lineHeight": "1.3",
+          "fontFamily": "mono"
+        },
+        "subhead": {
+          "fontSize": "1.25rem",
+          "fontWeight": "500",
+          "lineHeight": "1.5",
+          "fontFamily": "primary"
+        },
+        "body": {
+          "fontSize": "1rem",
+          "fontWeight": "400",
+          "lineHeight": "1.6",
+          "fontFamily": "primary"
+        },
+        "label": {
+          "fontSize": "0.875rem",
+          "fontWeight": "500",
+          "textTransform": "uppercase",
+          "letterSpacing": "0.05em",
+          "fontFamily": "primary"
+        }
+      }
+    },
+    "layout": {
+      "structure": {
+        "maxWidth": "1200px",
+        "contentWidth": "800px",
+        "padding": {
+          "mobile": "16px",
+          "desktop": "24px"
+        },
+        "sections": {
+          "paddingY": {
+            "small": "48px",
+            "medium": "64px",
+            "large": "96px"
+          }
+        }
+      },
+      "spacing": {
+        "baseUnit": "4px",
+        "scale": [4, 8, 16, 24, 32, 48, 64, 96],
+        "grid": "4px"
+      },
+      "components": {
+        "cards": {
+          "padding": "32px",
+          "borderRadius": "12px",
+          "background": "var(--surface)",
+          "border": "1px solid var(--panel-border)",
+          "shadow": "none"
+        },
+        "hero": {
+          "paddingY": "64px",
+          "textAlign": "center",
+          "maxWidth": "800px"
+        }
+      }
+    },
+    "buttons": {
+      "primary": {
+        "background": "var(--gradient-cyan-blue)",
+        "color": "#FFFFFF",
+        "padding": "16px 32px",
+        "borderRadius": "8px",
+        "fontSize": "16px",
+        "fontWeight": "600",
+        "border": "none",
+        "cursor": "pointer",
+        "transition": "all 0.12s ease-in-out",
+        "hover": {
+          "transform": "scale(1.04)",
+          "filter": "brightness(1.1)"
+        }
+      },
+      "secondary": {
+        "background": "transparent",
+        "color": "var(--primary-text)",
+        "padding": "16px 32px",
+        "borderRadius": "8px",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "border": "1px solid var(--panel-border)",
+        "cursor": "pointer",
+        "transition": "all 0.2s ease",
+        "hover": {
+          "borderColor": "var(--focus-accent)",
+          "color": "var(--focus-accent)"
+        }
+      },
+      "tertiary": {
+        "background": "transparent",
+        "color": "var(--secondary-text)",
+        "padding": "8px 16px",
+        "border": "none",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "textDecoration": "none",
+        "cursor": "pointer",
+        "transition": "all 0.2s ease",
+        "hover": {
+          "color": "var(--primary-accent)",
+          "textDecoration": "underline"
+        }
+      }
+    },
+    "inputs": {
+      "textField": {
+        "background": "var(--surface)",
+        "border": "1px solid var(--panel-border)",
+        "borderRadius": "8px",
+        "padding": "16px 20px",
+        "fontSize": "16px",
+        "color": "var(--primary-text)",
+        "fontFamily": "var(--font-primary)",
+        "outline": "none",
+        "transition": "all 0.2s ease",
+        "focus": {
+          "borderColor": "var(--focus-accent)",
+          "boxShadow": "0 0 0 2px rgba(139, 92, 246, 0.2)"
+        },
+        "placeholder": {
+          "color": "var(--ghost-text)"
+        }
+      }
+    },
+    "motion": {
+      "timing": {
+        "fast": "120ms",
+        "medium": "200ms",
+        "slow": "300ms"
+      },
+      "easing": {
+        "default": "ease-in-out",
+        "entrance": "ease-out",
+        "exit": "ease-in"
+      },
+      "effects": {
+        "hover": {
+          "duration": "120ms",
+          "easing": "ease-in-out"
+        },
+        "slideIn": {
+          "duration": "200ms",
+          "easing": "ease-out"
+        },
+        "fadeIn": {
+          "duration": "300ms",
+          "easing": "linear"
+        }
+      }
+    },
+    "imagery": {
+      "style": {
+        "borderRadius": "12px",
+        "maxWidth": "100%",
+        "height": "auto"
+      },
+      "hero": {
+        "borderRadius": "16px",
+        "shadow": "none"
+      }
+    },
+    "icons": {
+      "size": "24px",
+      "stroke": "2px",
+      "color": "var(--secondary-text)",
+      "hover": {
+        "color": "var(--primary-accent)"
+      }
+    },
+    "breakpoints": {
+      "mobile": "768px",
+      "tablet": "1024px",
+      "desktop": "1200px"
+    },
+    "cssVariables": {
+      "--gradient-cyan-blue": "linear-gradient(135deg, #0BA5EC 0%, #0069CB 100%)",
+      "--gradient-purple-violet": "linear-gradient(135deg, #8B5CF6 0%, #4B32B7 100%)",
+      "--gradient-pink-fuchsia": "linear-gradient(135deg, #F472B6 0%, #C026D3 100%)",
+      "--gradient-core": "linear-gradient(180deg, #1E1E1E 0%, #232538 100%)",
+      "--base-bg": "#1E1E1E",
+      "--surface": "#252526",
+      "--primary-text": "#E0E0E0",
+      "--secondary-text": "#A1A1AA",
+      "--ghost-text": "rgba(224, 224, 224, 0.6)",
+      "--primary-accent": "#0BA5EC",
+      "--focus-accent": "#8B5CF6",
+      "--panel-border": "#3E3E42",
+      "--success": "#6EE7B7",
+      "--error": "#F87171",
+      "--font-primary": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      "--font-mono": "'JetBrains Mono', 'IBM Plex Mono', 'SF Mono', monospace"
+    },
+    "principles": {
+      "minimalism": {
+        "description": "Use generous white space, single-column layouts, and clear content separation",
+        "rules": [
+          "One primary CTA per section",
+          "Minimal text per section - only essential copy",
+          "Clean separation between content blocks",
+          "Avoid visual clutter"
+        ]
+      },
+      "interaction": {
+        "description": "Subtle, smooth interactions that enhance usability",
+        "rules": [
+          "Smooth hover effects on interactive elements",
+          "Minimal scroll animations (fade-in, slide-up only)",
+          "Focus states clearly visible with accent colors",
+          "Consistent timing and easing across all animations"
+        ]
+      },
+      "accessibility": {
+        "description": "Dark theme with high contrast and clear hierarchy",
+        "rules": [
+          "High contrast between text and background colors",
+          "Clear visual hierarchy through typography scale",
+          "Focus indicators visible and consistent",
+          "Touch targets minimum 44px on mobile"
+        ]
+      }
+    }
+  }
+}

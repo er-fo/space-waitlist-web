@@ -1,0 +1,574 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>CADAgent PRO - Join the Waitlist</title>
+    <meta name="description" content="Be the first to experience CAD at the speed of thought. Join our waitlist for early access to professional AI-powered CAD software.">
+    <meta name="keywords" content="AI CAD, natural language CAD, 3D modeling, design automation, engineering software, waitlist">
+    <meta name="author" content="CADAgent PRO">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logotype.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-bg: #0f0f0f;
+            --secondary-bg: #1a1a1a;
+            --accent-color: #0ea5e9;
+            --accent-hover: #38bdf8;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: #334155;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow-light: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+            --font-primary: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            /* Scrolling disabled */
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            text-align: left;
+            max-width: 600px;
+            width: 100%;
+            padding: 0;
+        }
+
+        .content-offset {
+            transform: translateX(15%);
+        }
+
+        .header-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            justify-content: flex-start;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            flex-shrink: 0;
+        }
+
+        .brand-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.025em;
+        }
+
+        .tagline {
+            font-size: 1.875rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            line-height: 1.2;
+            max-width: 500px;
+        }
+
+        .thought-italic {
+            font-style: italic;
+            font-family: 'Times New Roman', Times, Georgia, serif;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            font-size: 1.05em;
+            background: linear-gradient(135deg, #94a3b8 0%, #64748b 50%, #475569 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 3.5rem;
+            line-height: 1.6;
+            max-width: 480px;
+        }
+
+        .waitlist-form {
+            position: relative;
+            max-width: 420px;
+            margin: 0;
+        }
+
+        .waitlist-meta {
+            max-width: 420px;
+        }
+
+        .input-container {
+            position: relative;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            padding: 4px;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .input-container:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .input-container.focused {
+            background: rgba(14, 165, 233, 0.1);
+            border-color: rgba(14, 165, 233, 0.4);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            padding-right: 140px;
+            font-size: 1rem;
+            background: transparent;
+            border: none;
+            border-radius: 2rem;
+            font-family: var(--font-primary);
+            font-weight: 400;
+            outline: none;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .email-input::placeholder {
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .submit-btn {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0.75rem 1.75rem;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #0369a1 100%);
+            color: white;
+            border: none;
+            border-radius: 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            letter-spacing: -0.01em;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, var(--accent-hover) 0%, #0ea5e9 100%);
+            transform: translateY(-50%);
+            box-shadow: 0 6px 16px rgba(14, 165, 233, 0.5);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-50%);
+        }
+
+        .submit-btn:disabled {
+            background: linear-gradient(135deg, #475569 0%, #334155 100%);
+            cursor: not-allowed;
+            transform: translateY(-50%);
+            box-shadow: 0 2px 8px rgba(71, 85, 105, 0.3);
+        }
+
+        .submit-btn.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .submit-btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-right: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .status-message {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            display: none;
+        }
+
+        .status-message.success {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .status-message.error {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .success-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.9) 0%, rgba(34, 197, 94, 0.8) 100%);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            border-radius: 2rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 500;
+            color: white;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+            animation: fadeInScale 0.3s ease-out;
+        }
+
+        .success-overlay.show {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .beta-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 0.75rem;
+            font-weight: 300;
+            letter-spacing: 0.01em;
+            text-align: center;
+        }
+
+        .integration-showcase {
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        .integration-container {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1);
+        }
+
+        .integration-container:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 48px rgba(14, 165, 233, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .integration-text {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .integration-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .integration-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .integration-image-wrapper {
+            text-align: center;
+        }
+
+        .integration-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 1rem;
+            border-top-left-radius: 2rem;
+            border-top-right-radius: 2rem;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+            display: inline-block;
+        }
+
+        .integration-container:hover .integration-image {
+            opacity: 1;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .container {
+                padding: 0;
+            }
+
+            .content-offset {
+                transform: none;
+            }
+
+            .header-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .brand-name {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1.5rem;
+                max-width: none;
+            }
+
+            .description {
+                font-size: 1rem;
+                max-width: none;
+            }
+
+            .waitlist-form {
+                max-width: 100%;
+            }
+
+            .email-input {
+                padding-right: 120px;
+                font-size: 0.9rem;
+            }
+
+            .submit-btn {
+                font-size: 0.85rem;
+                padding: 0.7rem 1.5rem;
+            }
+
+            .integration-showcase {
+                margin-top: 3rem;
+            }
+
+            .integration-container {
+                padding: 1.5rem;
+            }
+
+            .integration-title {
+                font-size: 1.125rem;
+            }
+
+            .integration-subtitle {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content-offset">
+        <div class="header-section">
+            <img src="logotype.png" alt="CADAgent PRO" class="logo">
+            <h1 class="brand-name">CADAgent PRO</h1>
+        </div>
+        
+        <p class="tagline">
+            CAD at the speed of <em class="thought-italic">thought</em>
+        </p>
+        
+        <p class="description">
+            Design and modify 3D models with natural language. No complex UI navigation—just tell your CAD software what you want.
+        </p>
+        
+        <form class="waitlist-form" id="waitlistForm">
+            <div class="input-container" id="inputContainer">
+                <input 
+                    type="email" 
+                    class="email-input" 
+                    placeholder="your@email.com" 
+                    required
+                    id="emailInput"
+                >
+                <!-- Honeypot field for bots: must match backend name "website" -->
+                <input type="text" name="website" id="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Join Waitlist
+                </button>
+                <div class="success-overlay" id="successOverlay">
+                    🎉 You're on the waitlist!
+                </div>
+            </div>
+        </form>
+        
+    <div class="status-message" id="statusMessage"></div>
+    <div class="waitlist-meta">
+        <p class="beta-note" id="betaNote">Early access reserved for waitlist members</p>
+    </div>
+    </div>
+    <!--
+    <div class="integration-showcase">
+            <div class="integration-container">
+                <div class="integration-text">
+                    <h3 class="integration-title">Works with your favorite CAD tools</h3>
+                    <p class="integration-subtitle">Seamless integration • No workflow disruption</p>
+                </div>
+                <div class="integration-image-wrapper">
+                    <img src="Skärmavbild 2025-08-18 kl. 22.00.12.png" alt="CAD Software Integration" class="integration-image">
+                </div>
+            </div>
+        </div>
+    -->
+    </div>
+
+    <script>
+        const emailInput = document.getElementById('emailInput');
+        const inputContainer = document.getElementById('inputContainer');
+        
+        // Add focus state handling
+        emailInput.addEventListener('focus', () => {
+            inputContainer.classList.add('focused');
+        });
+        
+        emailInput.addEventListener('blur', () => {
+            inputContainer.classList.remove('focused');
+        });
+        
+        document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const emailInput = document.getElementById('emailInput');
+            const submitBtn = document.getElementById('submitBtn');
+            const statusMessage = document.getElementById('statusMessage');
+            const successOverlay = document.getElementById('successOverlay');
+            const email = emailInput.value.trim();
+            
+            if (!email) {
+                showStatus('Please enter a valid email address.', 'error');
+                return;
+            }
+            
+            // Disable form during submission with immediate feedback
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+            statusMessage.style.display = 'none';
+            
+            // Add haptic feedback for mobile
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+            
+            try {
+                const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzZUoNqJIve6ExSxdAy6V4M_F0_tw6wIavGGHj-8RhvOesR8_VT0A1N5zQN1AwvIM1Oxw/exec';
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 10000);
+                await fetch(ENDPOINT, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: new URLSearchParams({ email, website: '' }),
+                    signal: controller.signal
+                });
+                clearTimeout(timeout);
+                // optimistic UI: show success overlay
+                setTimeout(() => {
+                    successOverlay.classList.add('show');
+                    emailInput.value = '';
+                    if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+                    setTimeout(() => {
+                        successOverlay.classList.remove('show');
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('loading');
+                    }, 3000);
+                }, 200);
+                showStatus('Successfully joined the waitlist! We\'ll be in touch soon.', 'success');
+            } catch (err) {
+                console.error(err);
+                showStatus('Something went wrong. Please try again later.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+            }
+        });
+        
+        function showStatus(message, type) {
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.textContent = message;
+            statusMessage.className = `status-message ${type}`;
+        }
+    </script>
+</body>
+</html>
