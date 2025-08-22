@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Font demo — CAD at the speed of thought</title>
+
+  <!-- Google Fonts: Geist kept to match site, plus slimmer serif options and Tiro Devanagari Sanskrit -->
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500&family=Spectral:wght@300;400;600&family=Cardo:wght@400;700&family=EB+Garamond:wght@300;400&family=Playfair+Display:wght@300;400;700&family=Libre+Baskerville:wght@300;400&family=Tiro+Devanagari+Sanskrit:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0f0f0f;
+      --panel:#0b1220;
+      --muted:#94a3b8;
+      --text:#f8fafc;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background:linear-gradient(180deg,var(--bg),#070709);
+      color:var(--text);
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:48px 24px;
+    }
+    .wrap{max-width:980px;width:100%;}
+    h1{font-size:18px;color:var(--muted);font-weight:400;margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+    .card{
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.04);
+      padding:18px 20px;border-radius:12px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.6);
+    }
+    .label{font-size:12px;color:var(--muted);margin-bottom:8px}
+    .tagline{font-size:26px;line-height:1.05;margin:0;color:var(--text);font-weight:400}
+
+    /* Per-font utilities */
+    .f-geist{font-family:'Geist',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300}
+    .f-cormorant{font-family:'Cormorant Garamond',serif;font-weight:300}
+    .f-spectral{font-family:'Spectral',serif;font-weight:300}
+    .f-cardo{font-family:'Cardo',serif;font-weight:400}
+    .f-ebgaramond{font-family:'EB Garamond',serif;font-weight:300}
+    .f-playfair{font-family:'Playfair Display',serif;font-weight:300}
+    .f-libre{font-family:'Libre Baskerville',serif;font-weight:300}
+
+    /* special sample where 'thought' uses Tiro Devanagari Sanskrit */
+    .thought-tiro{font-family:'Tiro Devanagari Sanskrit', serif; font-style:italic}
+
+    footer{color:var(--muted);font-size:13px;margin-top:18px}
+    @media (max-width:420px){.tagline{font-size:20px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Font samples — full tagline rendered in each font</h1>
+    <div class="grid">
+      <div class="card">
+        <div class="label">Geist (Light)</div>
+        <p class="tagline f-geist">CAD at the speed of <em class="thought-tiro">thought</em></p>
+      </div>
+
+      <div class="card">
+        <div class="label">Cormorant Garamond (slim, elegant)</div>
+        <p class="tagline f-cormorant">CAD at the speed of thought</p>
+      </div>
+
+      <div class="card">
+        <div class="label">Spectral (modern, slightly condensed)</div>
+        <p class="tagline f-spectral">CAD at the speed of thought</p>
+      </div>
+
+      <div class="card">
+        <div class="label">Cardo (narrow, classical)</div>
+        <p class="tagline f-cardo">CAD at the speed of thought</p>
+      </div>
+
+      <div class="card">
+        <div class="label">EB Garamond (slim Garamond)</div>
+        <p class="tagline f-ebgaramond">CAD at the speed of thought</p>
+      </div>
+
+      <div class="card">
+        <div class="label">Playfair Display (high-contrast display)</div>
+        <p class="tagline f-playfair">CAD at the speed of thought</p>
+      </div>
+
+      <div class="card">
+        <div class="label">Libre Baskerville (refined, slim)</div>
+        <p class="tagline f-libre">CAD at the speed of thought</p>
+      </div>
+
+      <div class="card">
+        <div class="label">Geist + Tiro (main in Geist Light; "thought" in Tiro Devanagari Sanskrit)</div>
+        <p class="tagline f-geist">CAD at the speed of <em class="thought-tiro">thought</em></p>
+      </div>
+
+    </div>
+
+    <footer>Open <strong>demo-fonts.html</strong> in a browser to compare. Tell me which one you prefer and I can apply it to `index.html`.</footer>
+  </div>
+</body>
+</html>
