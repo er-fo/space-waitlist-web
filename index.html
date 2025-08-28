@@ -580,5 +580,70 @@
             statusMessage.className = `status-message ${type}`;
         }
     </script>
+        <!-- Off-screen, crawlable SEO block: FAQ + Features + JSON-LD -->
+    <div id="seo-hidden" style="position:absolute; left:-9999px; top:-9999px; width:auto; height:auto; overflow:hidden;" aria-hidden="true">
+                <section id="seo-faq">
+                        <h2>FAQ — AI‑Native CAD</h2>
+                        <dl>
+                                <dt>What is AI‑Native CAD and who is it for?</dt>
+                                <dd>AI‑Native CAD lets users create and modify professional 3D models using plain language. It targets engineers, makers, hobbyists, and educators who want fast, manufacturable designs without the steep learning curve of traditional CAD.</dd>
+
+                                <dt>How does natural language translate into accurate models?</dt>
+                                <dd>Our AI parses intent, applies engineering rules and manufacturability checks, and fills technical details to generate STEP/STL files and editable specifications instantly.</dd>
+
+                                <dt>What file formats and outputs are supported?</dt>
+                                <dd>Designs export to industry formats such as STEP, IGES, and STL, plus editable YAML specifications and immediate 3D previews for rapid iteration.</dd>
+
+                                <dt>Can I refine a design after the AI generates it?</dt>
+                                <dd>Yes — iterative natural language edits and parametric controls let you make changes like "make it taller" or "add two 5mm holes" while preserving manufacturability.</dd>
+
+                                <dt>Is AI‑Native CAD suitable for manufacturing and prototyping?</dt>
+                                <dd>Absolutely — generated models include manufacturing-aware features (drafts, tolerances, fillets) and validation for 3D printing, CNC, and injection molding workflows.</dd>
+                        </dl>
+                </section>
+
+                <section id="seo-features">
+                        <h2>Key Features</h2>
+                        <ul>
+                                <li><strong>Natural Language Design:</strong> Build parametric parts and assemblies by describing intent in everyday language.</li>
+                                <li><strong>Manufacturing‑Ready Output:</strong> Exports optimized STEP/IGES/STL files with built‑in checks for printability and machining.</li>
+                                <li><strong>Fast Iteration & Automation:</strong> Instant regeneration, batch generation, and scriptable workflows for rapid prototyping and production.</li>
+                        </ul>
+                </section>
+
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "FAQPage",
+                    "mainEntity": [
+                        {
+                            "@type": "Question",
+                            "name": "What is AI‑Native CAD and who is it for?",
+                            "acceptedAnswer": { "@type": "Answer", "text": "AI‑Native CAD lets users create and modify professional 3D models using plain language. It targets engineers, makers, hobbyists, and educators who want fast, manufacturable designs without the steep learning curve of traditional CAD." }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "How does natural language translate into accurate models?",
+                            "acceptedAnswer": { "@type": "Answer", "text": "Our AI parses intent, applies engineering rules and manufacturability checks, and fills technical details to generate STEP/STL files and editable specifications instantly." }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "What file formats and outputs are supported?",
+                            "acceptedAnswer": { "@type": "Answer", "text": "Designs export to industry formats such as STEP, IGES, and STL, plus editable YAML specifications and immediate 3D previews for rapid iteration." }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "Can I refine a design after the AI generates it?",
+                            "acceptedAnswer": { "@type": "Answer", "text": "Yes — iterative natural language edits and parametric controls let you make changes like 'make it taller' or 'add two 5mm holes' while preserving manufacturability." }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "Is AI‑Native CAD suitable for manufacturing and prototyping?",
+                            "acceptedAnswer": { "@type": "Answer", "text": "Absolutely — generated models include manufacturing-aware features (drafts, tolerances, fillets) and validation for 3D printing, CNC, and injection molding workflows." }
+                        }
+                    ]
+                }
+                </script>
+        </div>
 </body>
 </html>
