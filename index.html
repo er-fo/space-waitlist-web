@@ -19,6 +19,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,300;0,400;1,400&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap" rel="stylesheet">
+    <!-- Google Analytics (GA4) - replace G-XXXXXXXXXX with your Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NS7JY9W36"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);} 
+        gtag('js', new Date());
+        // anonymize IP by default for privacy
+        gtag('config', 'G-7NS7JY9W36', { 'anonymize_ip': true });
+    </script>
     
     <style>
         :root {
@@ -559,6 +568,15 @@
                     successOverlay.classList.add('show');
                     emailInput.value = '';
                     if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+                    // Track a generic sign_up event in GA4 (no PII sent)
+                    try {
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'sign_up', { method: 'waitlist' });
+                        }
+                    } catch (e) {
+                        // ignore analytics errors
+                        console.debug('gtag error', e);
+                    }
                     setTimeout(() => {
                         successOverlay.classList.remove('show');
                         submitBtn.disabled = false;
@@ -579,6 +597,42 @@
             statusMessage.textContent = message;
             statusMessage.className = `status-message ${type}`;
         }
+
+        // ---- Google Analytics: page visit + session duration (privacy-safe, no PII) ----
+        (function(){
+            try {
+                // mark page start
+                const _pageStart = Date.now();
+
+                // send a lightweight page_visit event on load (may duplicate built-in page_view)
+                if (typeof gtag === 'function') {
+                    gtag('event', 'page_visit', { method: 'load' });
+                }
+
+                // compute and send session duration (seconds) using beacon-friendly transport
+                function sendSessionDuration(){
+                    const secs = Math.round((Date.now() - _pageStart) / 1000);
+                    try {
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'session_duration', {
+                                session_duration_seconds: secs,
+                                transport_type: 'beacon'
+                            });
+                        }
+                    } catch(e){
+                        console.debug('gtag send error', e);
+                    }
+                }
+
+                // pagehide is preferred for analytics before unload; visibilitychange covers tab switches
+                window.addEventListener('pagehide', sendSessionDuration, {capture: true});
+                document.addEventListener('visibilitychange', function(){
+                    if (document.visibilityState === 'hidden') sendSessionDuration();
+                });
+            } catch (e) {
+                console.debug('GA duration tracker init failed', e);
+            }
+        })();
     </script>
         <!-- Off-screen, crawlable SEO block: FAQ + Features + JSON-LD -->
     <div id="seo-hidden" style="position:absolute; left:-9999px; top:-9999px; width:auto; height:auto; overflow:hidden;" aria-hidden="true">
