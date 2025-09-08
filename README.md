@@ -32,6 +32,10 @@ This is a static website deployed via GitHub Pages. To make changes:
 2. Test locally by opening `index.html` in a browser
 3. Push to main branch to deploy automatically
 
+### Images index
+
+- A simple index is available at `/images/` (e.g. https://cadagentpro.com/images/) which lists and links to files in the `images/` folder — useful for embedding direct image URLs in emails and other assets.
+
 ## Brand Guidelines
 
 See [`space-core/design_guidelines.md`](./space-core/design_guidelines.md) for complete visual identity and design system documentation. 
