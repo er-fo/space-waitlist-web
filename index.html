@@ -31,8 +31,8 @@
     
     <style>
         :root {
-            --primary-bg: #0f0f0f;
-            --secondary-bg: #1a1a1a;
+            --primary-bg: #000000;
+            --secondary-bg: #000000;
             --accent-color: #0ea5e9;
             --accent-hover: #38bdf8;
             --text-primary: #f8fafc;
@@ -54,15 +54,41 @@
 
         body {
             font-family: var(--font-primary);
-            background: var(--primary-bg);
+            background: #000000;
             color: var(--text-primary);
-            /* Scrolling disabled */
-            overflow: hidden;
+            scroll-behavior: smooth;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                rgba(14,165,233,0.025) 0%,
+                rgba(56,189,248,0.02) 20%,
+                rgba(14,165,233,0.015) 40%,
+                rgba(56,189,248,0.02) 60%,
+                rgba(14,165,233,0.025) 80%,
+                rgba(56,189,248,0.03) 100%
+            );
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .main-section {
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            position: relative;
         }
 
         .container {
@@ -79,8 +105,8 @@
         .header-section {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
+            gap: 1.25rem;
+            margin-bottom: 2rem;
             justify-content: flex-start;
         }
 
@@ -109,10 +135,10 @@
         .tagline {
             font-size: 1.875rem;
             font-weight: 300;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             color: var(--text-secondary);
             line-height: 1.2;
-            max-width: 500px;
+            max-width: 520px;
         }
 
         .thought-italic {
@@ -130,7 +156,7 @@
         .description {
             font-size: 1.125rem;
             color: var(--text-secondary);
-            margin-bottom: 3.5rem;
+            margin-bottom: 3rem; /* slightly tighter for better rhythm */
             line-height: 1.6;
             max-width: 480px;
         }
@@ -166,6 +192,30 @@
             box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
         }
 
+        /* Mirror the waitlist input look for the beta info panel */
+        .beta-glass-inner {
+            position: relative;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.25rem;
+            padding: 1rem 1.1rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.28s ease;
+            margin: 0 auto;
+        }
+
+        .beta-glass-inner:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .beta-glass-inner.focused {
+            background: rgba(14, 165, 233, 0.06);
+            border-color: rgba(14, 165, 233, 0.28);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.08);
+        }
+
         .email-input {
             width: 100%;
             padding: 1rem 1.5rem;
@@ -192,24 +242,58 @@
             top: 50%;
             transform: translateY(-50%);
             padding: 0.75rem 1.75rem;
-            background: linear-gradient(135deg, var(--accent-color) 0%, #0369a1 100%);
             color: white;
-            border: none;
+            border: 1px solid rgba(148,163,184,0.22);
             border-radius: 1.5rem;
             font-size: 0.9rem;
             font-weight: 600;
             font-family: var(--font-primary);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: box-shadow 200ms ease, border-color 200ms ease, background 200ms ease;
             white-space: nowrap;
             letter-spacing: -0.01em;
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+            background:
+                linear-gradient(180deg, rgba(2,6,23,0.75) 0%, rgba(2,6,23,0.55) 100%),
+                linear-gradient(135deg, rgba(14,165,233,0.16), rgba(56,189,248,0.08));
+            box-shadow:
+                0 8px 22px rgba(14,165,233,0.25),
+                inset 0 1px 0 rgba(255,255,255,0.08);
+            overflow: hidden;
+            backdrop-filter: blur(6px);
+        }
+
+        .submit-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0));
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        /* Glossy sheen sweep to match download button */
+        .submit-btn::after {
+            content: "";
+            position: absolute;
+            top: -120%;
+            left: -20%;
+            width: 60%;
+            height: 300%;
+            transform: rotate(20deg);
+            background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.16), rgba(255,255,255,0));
+            transition: transform 600ms ease;
+            pointer-events: none;
         }
 
         .submit-btn:hover {
-            background: linear-gradient(135deg, var(--accent-hover) 0%, #0ea5e9 100%);
             transform: translateY(-50%);
-            box-shadow: 0 6px 16px rgba(14, 165, 233, 0.5);
+            box-shadow: 0 10px 26px rgba(14,165,233,0.35);
+            border-color: rgba(56,189,248,0.35);
+        }
+
+        .submit-btn:hover::after {
+            transform: rotate(20deg) translateX(140%);
         }
 
         .submit-btn:active {
@@ -217,10 +301,17 @@
         }
 
         .submit-btn:disabled {
-            background: linear-gradient(135deg, #475569 0%, #334155 100%);
+            background: linear-gradient(180deg, rgba(15,23,42,0.7), rgba(15,23,42,0.6));
             cursor: not-allowed;
             transform: translateY(-50%);
-            box-shadow: 0 2px 8px rgba(71, 85, 105, 0.3);
+            box-shadow: 0 2px 8px rgba(71, 85, 105, 0.25);
+            border-color: rgba(100,116,139,0.25);
+        }
+
+        .submit-btn:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(14,165,233,0.35), 0 8px 22px rgba(14,165,233,0.3);
+            border-color: rgba(56,189,248,0.6);
         }
 
         .submit-btn.loading {
@@ -246,6 +337,12 @@
         @keyframes spin {
             0% { transform: translate(-50%, -50%) rotate(0deg); }
             100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
         .status-message {
@@ -321,11 +418,21 @@
         .beta-note {
             font-size: 0.8rem;
             color: var(--text-muted);
-            font-style: italic;
             margin-top: 0.75rem;
             font-weight: 300;
             letter-spacing: 0.01em;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .beta-note::before {
+            content: 'ⓘ';
+            font-size: 0.875rem;
+            color: var(--accent-color);
+            opacity: 0.8;
         }
 
         .integration-showcase {
@@ -388,9 +495,866 @@
             opacity: 1;
         }
 
+        .scroll-arrow {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-arrow:hover {
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        .scroll-arrow-text {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 0.025em;
+        }
+
+        .scroll-arrow-icon {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--accent-color);
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg);
+        }
+
+        .beta-section {
+            min-height: 100vh;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .beta-content {
+            text-align: center;
+            max-width: 640px; /* align with .beta-info for symmetry */
+            position: relative;
+            z-index: 1; /* above background so glass can blur it */
+        }
+
+        .beta-glass-container {
+            background: #000000;
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 22px;
+            padding: 2.5rem 2.25rem 2.25rem;
+            backdrop-filter: blur(20px) saturate(1.15) contrast(1.05);
+            -webkit-backdrop-filter: blur(20px) saturate(1.15) contrast(1.05);
+            box-shadow:
+                0 24px 60px rgba(14,165,233,0.08),
+                0 8px 28px rgba(0,0,0,0.35),
+                inset 0 1px 0 rgba(255,255,255,0.08),
+                inset 0 0 0 1px rgba(14,165,233,0.06);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .beta-glass-container::before {
+            /* Subtle top gleam */
+            content: "";
+            position: absolute;
+            inset: 0 0 auto 0;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(14,165,233,0.9), rgba(56,189,248,0.9), rgba(14,165,233,0.9));
+        }
+
+
+        .beta-glass-container:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 28px 70px rgba(14,165,233,0.12),
+                0 12px 40px rgba(0,0,0,0.35),
+                inset 0 1px 0 rgba(255,255,255,0.03),
+                inset 0 0 0 1px rgba(14,165,233,0.02);
+            border-color: rgba(56,189,248,0.22);
+        }
+
+        .beta-title {
+            font-size: 1.05rem; /* slightly smaller to balance with the larger pretitle */
+            font-weight: 300;
+            margin: 0; /* handle spacing via version-row */
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.02);
+            margin-bottom: 0.25rem;
+        }
+
+        /* Pretitle: slightly larger and white as requested */
+        .beta-pretitle {
+            font-family: var(--font-primary);
+            font-style: normal;
+            font-weight: 300; /* light */
+            /* scaled ~1.6x from previous 2rem -> 3.2rem for stronger emphasis */
+            font-size: 3.2rem;
+            line-height: 1.15;
+            color: var(--text-primary); /* white */
+            margin-bottom: 0.6rem;
+            letter-spacing: -0.01em;
+        }
+
+        /* Remove gap between CADAgent text and the inline logo inside the heading */
+        .beta-title .heading-lockup { gap: 0; }
+        .beta-title .heading-logo { margin-left: 0; margin-top: 0; }
+
+        /* Version row sits between heading and CTA to allow symmetric spacing */
+        .version-row {
+            display: flex;
+            justify-content: center;
+            /* add clear spacing from system requirements above */
+            margin: 0.75rem 0 1rem 0; /* top gap separates requirements from version */
+        }
+
+    .beta-download-container { margin: 1.25rem auto 1.25rem auto; }
+
+        /* Fine-tune the download button's vertical rhythm inside the glass card */
+        .beta-download-container, .version-row, .beta-title, .beta-pretitle {
+            display: block;
+        }
+
+        /* Heading lockup matches download button lockup (logo right) */
+        .heading-lockup {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.15rem; /* minimal gap between text and logo */
+            vertical-align: middle;
+        }
+
+        .heading-lockup .brand-lockup {
+            display: inline-flex;
+            gap: 0; /* no gap between CAD and Agent */
+            align-items: baseline;
+            font-size: inherit; /* match surrounding heading text size */
+        }
+
+        .heading-lockup .cad-text { font-weight: 700; }
+        .heading-lockup .agent-text { font-weight: 200; }
+
+        .heading-logo {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            flex-shrink: 0;
+            margin-top: 1px; /* optical alignment */
+        }
+
+        .version-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: linear-gradient(180deg, rgba(148,163,184,0.12), rgba(148,163,184,0.08));
+            border: 1px solid rgba(148,163,184,0.2);
+            border-radius: 12px;
+            padding: 0.25rem 0.6rem;
+            margin-left: 0.75rem;
+            letter-spacing: 0.02em;
+            vertical-align: middle;
+            font-family: var(--font-mono);
+        }
+
+        .beta-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .beta-download-container {
+            max-width: 320px;
+            margin: 1.25rem auto 1.25rem auto;
+        }
+
+        .beta-download-btn {
+            width: 100%;
+            padding: 0.75rem 1.75rem;
+            color: white;
+            border: 1px solid rgba(148,163,184,0.22);
+            border-radius: 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font-primary);
+            cursor: pointer;
+            transition: box-shadow 200ms ease, border-color 200ms ease, background 200ms ease;
+            letter-spacing: -0.01em;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            background:
+                linear-gradient(180deg, rgba(2,6,23,0.75) 0%, rgba(2,6,23,0.55) 100%), /* glass dark */
+                linear-gradient(135deg, rgba(14,165,233,0.16), rgba(56,189,248,0.08)); /* subtle brand wash */
+            box-shadow:
+                0 8px 22px rgba(14,165,233,0.25),
+                inset 0 1px 0 rgba(255,255,255,0.08);
+            overflow: hidden;
+            backdrop-filter: blur(6px);
+        }
+
+        .beta-download-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0));
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        .beta-download-btn::after {
+            content: "";
+            position: absolute;
+            top: -120%;
+            left: -20%;
+            width: 60%;
+            height: 300%;
+            transform: rotate(20deg);
+            background: linear-gradient( to right, rgba(255,255,255,0), rgba(255,255,255,0.16), rgba(255,255,255,0) );
+            transition: transform 600ms ease;
+            pointer-events: none;
+        }
+
+        .beta-download-btn .download-logo {
+            width: 1.1rem;
+            height: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .beta-download-btn .cad-text {
+            font-weight: 700;
+        }
+
+        .beta-download-btn .agent-text {
+            font-weight: 200;
+        }
+
+        /* Prevent extra space between CAD and Agent inside the download button */
+        .beta-download-btn .brand-lockup {
+            display: inline-flex;
+            gap: 0; /* override parent flex gap between these two spans */
+            align-items: baseline;
+        }
+
+        /* Group CADAgent + logo with tight spacing */
+        .beta-download-btn .brand-unit {
+            display: inline-flex;
+            gap: 0.25rem;
+            align-items: center;
+        }
+
+        .beta-download-btn .brand-unit .download-logo {
+            margin-top: 1px; /* optical alignment next to type */
+        }
+
+        .beta-download-btn .btn-chevron {
+            width: 14px;
+            height: 14px;
+            border-right: 2px solid rgba(255,255,255,0.9);
+            border-bottom: 2px solid rgba(255,255,255,0.9);
+            transform: rotate(-45deg);
+            opacity: 0.9;
+            margin-left: 0.25rem;
+            transition: transform 160ms ease, opacity 160ms ease;
+        }
+
+        .beta-download-btn:hover .btn-chevron {
+            transform: rotate(-45deg) translateX(2px) translateY(2px);
+            opacity: 1;
+        }
+
+        .beta-download-btn:hover {
+            box-shadow: 0 10px 26px rgba(14,165,233,0.35);
+            border-color: rgba(56,189,248,0.35);
+        }
+
+        .beta-download-btn:hover::after {
+            transform: rotate(20deg) translateX(140%);
+        }
+
+        .beta-download-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 8px 24px rgba(14,165,233,0.3);
+        }
+
+        .beta-download-btn:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(14,165,233,0.35), 0 10px 30px rgba(14,165,233,0.35);
+            border-color: rgba(56,189,248,0.6);
+        }
+
+        .beta-download-btn:disabled {
+            background: linear-gradient(180deg, rgba(15,23,42,0.7), rgba(15,23,42,0.6));
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 4px 16px rgba(71, 85, 105, 0.2);
+            border-color: rgba(100,116,139,0.25);
+        }
+
+        .beta-download-btn.loading {
+            color: transparent;
+        }
+
+        .beta-download-btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.25);
+            border-top-color: rgba(255,255,255,0.9);
+            border-right-color: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+            box-shadow: 0 0 0 2px rgba(14,165,233,0.15);
+        }
+
+        .beta-email-container {
+            width: 120%;
+            margin-left: -10%;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+
+        .beta-email-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .beta-email-input-wrapper {
+            position: relative;
+            width: 100%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            padding: 4px;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .beta-email-input-wrapper:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .beta-email-input-wrapper.focused {
+            background: rgba(14, 165, 233, 0.1);
+            border-color: rgba(14, 165, 233, 0.4);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+        }
+
+        .beta-email-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            padding-right: 140px;
+            font-size: 1rem;
+            background: transparent;
+            border: none;
+            border-radius: 2rem;
+            font-family: var(--font-primary);
+            font-weight: 400;
+            outline: none;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .beta-email-input::placeholder {
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .beta-email-submit {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0.75rem 1.75rem;
+            color: white;
+            border: 1px solid rgba(148,163,184,0.22);
+            border-radius: 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font-primary);
+            cursor: pointer;
+            transition: box-shadow 200ms ease, border-color 200ms ease, background 200ms ease;
+            white-space: nowrap;
+            letter-spacing: -0.01em;
+            background:
+                linear-gradient(180deg, rgba(2,6,23,0.75) 0%, rgba(2,6,23,0.55) 100%),
+                linear-gradient(135deg, rgba(14,165,233,0.16), rgba(56,189,248,0.08));
+            box-shadow:
+                0 8px 22px rgba(14,165,233,0.25),
+                inset 0 1px 0 rgba(255,255,255,0.08);
+            overflow: hidden;
+            backdrop-filter: blur(6px);
+        }
+
+        .beta-email-submit::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0));
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        .beta-email-submit::after {
+            content: "";
+            position: absolute;
+            top: -120%;
+            left: -20%;
+            width: 60%;
+            height: 300%;
+            transform: rotate(20deg);
+            background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.16), rgba(255,255,255,0));
+            transition: transform 600ms ease;
+            pointer-events: none;
+        }
+
+        .beta-email-submit .btn-chevron {
+            width: 12px;
+            height: 12px;
+            border-right: 2px solid rgba(255,255,255,0.9);
+            border-bottom: 2px solid rgba(255,255,255,0.9);
+            transform: rotate(-45deg);
+            opacity: 0.9;
+            transition: transform 160ms ease, opacity 160ms ease;
+        }
+
+        .beta-email-submit:hover .btn-chevron {
+            transform: rotate(-45deg) translateX(2px) translateY(2px);
+            opacity: 1;
+        }
+
+        .beta-email-submit:hover {
+            box-shadow: 0 10px 26px rgba(14,165,233,0.35);
+            border-color: rgba(56,189,248,0.35);
+        }
+
+        .beta-email-submit:hover::after {
+            transform: rotate(20deg) translateX(140%);
+        }
+
+        .beta-email-submit:active {
+            transform: translateY(0);
+        }
+
+        .beta-email-submit:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(14,165,233,0.35), 0 10px 30px rgba(14,165,233,0.35);
+            border-color: rgba(56,189,248,0.6);
+        }
+
+        .beta-email-submit:disabled {
+            background: linear-gradient(180deg, rgba(15,23,42,0.7), rgba(15,23,42,0.6));
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 4px 16px rgba(71, 85, 105, 0.2);
+            border-color: rgba(100,116,139,0.25);
+        }
+
+        .beta-email-submit.loading {
+            color: transparent;
+        }
+
+        .beta-email-submit.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.25);
+            border-top-color: rgba(255,255,255,0.9);
+            border-right-color: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+            box-shadow: 0 0 0 2px rgba(14,165,233,0.15);
+        }
+
+        .beta-success-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.9) 0%, rgba(34, 197, 94, 0.8) 100%);
+            border-radius: 2rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 500;
+            color: white;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+            animation: fadeInScale 0.3s ease-out;
+        }
+
+        .beta-success-overlay.show {
+            display: flex;
+        }
+
+        .beta-info {
+            max-width: 640px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+    .beta-glass-container .beta-info { margin: 0; }
+
+        .beta-info h3 {
+            font-family: var(--font-primary);
+            font-size: 1.05rem; /* reduced for a more compact card */
+            font-weight: 300;
+            color: var(--text-secondary);
+            letter-spacing: -0.01em;
+            line-height: 1.45; /* tighter line-height for compactness */
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .system-requirements {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin: 0;
+            font-family: var(--font-mono);
+            letter-spacing: 0.01em;
+        }
+
+        .beta-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+            align-items: stretch; /* ensure equal card heights */
+        }
+
+        .beta-info-grid > .beta-info-section {
+            height: 100%;
+        }
+
+        .beta-info-section {
+            position: relative;
+            background: linear-gradient(180deg, rgba(2,6,23,0.6) 0%, rgba(2,6,23,0.4) 100%);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 14px;
+            padding: 1.15rem 1.15rem 1.05rem 1.15rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
+            overflow: hidden;
+            transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .beta-info-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, rgba(14,165,233,0.9), rgba(56,189,248,0.9));
+        }
+
+        .beta-info-section::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(148,163,184,0.08) 1px, transparent 1px);
+            background-size: 12px 12px;
+            mask-image: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.1));
+            pointer-events: none;
+        }
+
+        .beta-info-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px rgba(14,165,233,0.12);
+            border-color: rgba(56,189,248,0.35);
+        }
+
+        .beta-info-section h4 {
+            font-size: 0.96rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.45rem;
+            letter-spacing: 0.01em;
+        }
+
+        .beta-info-section p, .beta-info-section ul {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+            margin-bottom: 0.6rem; /* subtle space for readability */
+        }
+
+        .beta-info-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .beta-info-section:not(:last-child) li {
+            margin-bottom: 0.35rem;
+            padding-left: 0.75rem;
+            position: relative;
+        }
+
+        .beta-info-section:not(:last-child) li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color), #0ea5e9);
+            box-shadow: 0 0 0 2px rgba(14,165,233,0.15);
+            transform: translateY(-50%);
+        }
+
+        .beta-info-section:last-child li {
+            margin-bottom: 0.75rem;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            background: rgba(148, 163, 184, 0.04);
+            border: 1px solid rgba(148, 163, 184, 0.12);
+            border-radius: 8px;
+            transition: all 200ms ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .beta-info-section:last-child li:hover {
+            background: rgba(148, 163, 184, 0.08);
+            border-color: rgba(56, 189, 248, 0.25);
+            transform: translateX(4px);
+        }
+
+        .beta-info-section:last-child li::before {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            background-color: var(--accent-color);
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+        }
+
+        .beta-info-section:last-child li[data-icon="learning"]::before {
+            content: '📖';
+            background: none;
+            mask-image: none;
+            color: var(--accent-color);
+            font-size: 16px;
+            width: auto;
+            height: auto;
+        }
+
+        .beta-info-section:last-child li[data-icon="engineering"]::before {
+            content: '⚙️';
+            background: none;
+            mask-image: none;
+            color: var(--accent-color);
+            font-size: 16px;
+            width: auto;
+            height: auto;
+        }
+
+        .chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.75rem;
+        }
+
+        /* Align chips to the bottom for symmetrical card weight */
+        .beta-info-section .chip-row {
+            margin-top: auto;
+            padding-top: 0.5rem;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.72rem;
+            color: #cbd5e1;
+            background: rgba(148,163,184,0.08);
+            border: 1px solid rgba(148,163,184,0.18);
+            border-radius: 999px;
+            padding: 0.25rem 0.5rem;
+            letter-spacing: 0.02em;
+        }
+
+        .chip .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(14,165,233,0.15);
+        }
+
+        .footer {
+            background: #000000;
+            border-top: 1px solid var(--glass-border);
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: var(--text-primary);
+        }
+
+        .footer-brand .agent {
+            font-weight: 200;
+        }
+
+        .footer-divider {
+            width: 1px;
+            height: 24px;
+            background: var(--glass-border);
+            margin: 0 0.5rem;
+        }
+
+        .footer-email {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-email:hover {
+            color: var(--accent-color);
+        }
+
+
         @media (max-width: 640px) {
-            body {
+            .main-section {
                 padding: 1rem;
+            }
+
+            .beta-section {
+                padding: 2rem 1rem;
+            }
+
+            .beta-title {
+                font-size: 1.05rem;
+                letter-spacing: -0.02em;
+                font-weight: 300;
+            }
+
+            .beta-subtitle {
+                font-size: 1rem;
+            }
+
+            .beta-download-container {
+                max-width: 100%;
+            }
+
+            .beta-download-btn {
+                font-size: 1rem;
+                padding: 1rem 1.5rem;
+            }
+
+            .beta-download-btn .download-logo {
+                width: 1rem;
+                height: 1rem;
+            }
+
+            .beta-email-input {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .beta-email-submit {
+                font-size: 0.85rem;
+                padding: 0.7rem 1.25rem;
+            }
+
+            .beta-email-submit .btn-chevron {
+                width: 10px;
+                height: 10px;
+            }
+
+            .beta-info-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .beta-info-section {
+                padding: 1rem;
+            }
+
+            .beta-glass-container {
+                padding: 2rem 1.5rem;
+                border-radius: 1.5rem;
+                box-shadow: 
+                    0 15px 40px rgba(14, 165, 233, 0.06),
+                    0 6px 24px rgba(0, 0, 0, 0.25),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                    inset 0 0 0 1px rgba(14, 165, 233, 0.04);
+            }
+
+            .beta-glass-container:hover {
+                transform: translateY(-2px);
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 0.75rem;
+                text-align: center;
+            }
+
+            .footer-divider {
+                width: 24px;
+                height: 1px;
+                margin: 0;
+            }
+
+            .footer-brand {
+                font-size: 1.25rem;
             }
             
             .container {
@@ -420,6 +1384,11 @@
             .tagline {
                 font-size: 1.5rem;
                 max-width: none;
+            }
+
+            .beta-pretitle {
+                font-size: 2.4rem; /* scaled ~1.6x from 1.5rem */
+                line-height: 1.2;
             }
 
             .description {
@@ -460,6 +1429,7 @@
     </style>
 </head>
 <body>
+    <section class="main-section" id="mainSection">
     <div class="container">
         <div class="header-section center-title">
             <img src="logotype.png" alt="CADAgent" class="logo">
@@ -472,7 +1442,7 @@
         </p>
         
         <p class="description">
-            Design and modify 3D models with natural language. No complex UI navigation—just tell your CAD software what you want.
+            Turn ideas into 3D models in seconds, not hours. Skip the menus, buttons, and tutorials—just describe what you need.
         </p>
         
         <form class="waitlist-form" id="waitlistForm">
@@ -490,14 +1460,14 @@
                     Join Waitlist
                 </button>
                 <div class="success-overlay" id="successOverlay">
-                    🎉 You're on the waitlist!
+                    You're on the waitlist!
                 </div>
             </div>
         </form>
         
     <div class="status-message" id="statusMessage"></div>
     <div class="waitlist-meta">
-        <p class="beta-note" id="betaNote">Early access reserved for waitlist members</p>
+        <p class="beta-note" id="betaNote">Join for benefits and development updates</p>
     </div>
     </div>
     <!--
@@ -514,6 +1484,62 @@
         </div>
     -->
     </div>
+        
+        <div class="scroll-arrow" id="scrollArrow">
+            <span class="scroll-arrow-text">Download Beta</span>
+            <div class="scroll-arrow-icon"></div>
+        </div>
+    </section>
+
+    <section class="beta-section" id="betaSection">
+        <div class="beta-content">
+            <div class="beta-glass-container">
+                <div class="beta-pretitle">Beta access</div>
+                <h2 class="beta-title">Download the beta of <span class="heading-lockup"><span class="brand-lockup"><span class="cad-text">CAD</span><span class="agent-text">Agent</span></span><img src="logotype.png" alt="CADAgent" class="download-logo heading-logo"></span> and help shape the future.</h2>
+
+                <div class="beta-download-container">
+                    <button class="beta-download-btn" id="betaDownloadBtn">
+                        Download ZIP
+                        <span class="btn-chevron" aria-hidden="true"></span>
+                    </button>
+                    
+                    <!-- Email input form (hidden initially) -->
+                    <div class="beta-email-container" id="betaEmailContainer" style="display: none;">
+                        <div class="beta-email-input-wrapper">
+                            <input 
+                                type="email" 
+                                class="beta-email-input" 
+                                placeholder="Enter your email to proceed"
+                                required
+                                id="betaEmailInput"
+                            >
+                            <button type="button" class="beta-email-submit" id="betaEmailSubmit">
+                                Proceed
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="beta-success-overlay" id="betaSuccessOverlay">Download starting!</div>
+
+                <div class="beta-info">
+                    <h3>Create professional 3D models by simply describing what you need. No menus, no tutorials, no complexity.</h3>
+                    <p class="system-requirements">Mac & Windows • Fusion 360 (v2.0.16000+) • <a href="https://github.com/er-fo/CADAgent/tree/main" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">Open Source</a></p>
+                    <div class="version-row"><span class="version-badge">v0.1.30</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <img src="logotype.png" alt="CADAgent" class="footer-logo">
+            <span class="footer-brand">CAD<span class="agent">Agent</span></span>
+            <div class="footer-divider"></div>
+            <a href="mailto:hi@cadagentpro.com" class="footer-email">hi@cadagentpro.com</a>
+            <div class="footer-divider"></div>
+            <a href="https://github.com/er-fo/CADAgent/tree/main" target="_blank" rel="noopener" class="footer-email">GitHub</a>
+        </div>
+    </footer>
 
     <script>
         const emailInput = document.getElementById('emailInput');
@@ -553,7 +1579,7 @@
             }
             
             try {
-                const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzZUoNqJIve6ExSxdAy6V4M_F0_tw6wIavGGHj-8RhvOesR8_VT0A1N5zQN1AwvIM1Oxw/exec';
+                const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxhH_gtb3tDh3jrHkZGirQwEVthHKQnngUr4LfZtO6xv9q0PZHgi0J8vkedVhgRyxUn5Q/exec';
                 const controller = new AbortController();
                 const timeout = setTimeout(() => controller.abort(), 10000);
                 await fetch(ENDPOINT, {
@@ -633,6 +1659,163 @@
                 console.debug('GA duration tracker init failed', e);
             }
         })();
+
+        // Smooth scroll functionality
+        let isScrolling = false;
+        
+        function scrollToBeta() {
+            if (isScrolling) return;
+            isScrolling = true;
+            
+            document.getElementById('betaSection').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+            
+            setTimeout(() => {
+                isScrolling = false;
+            }, 1000);
+        }
+        
+        // Arrow click handler
+        document.getElementById('scrollArrow').addEventListener('click', scrollToBeta);
+        
+    // Removed auto-scroll on wheel and touch to allow free scrolling; arrow click still smooth-scrolls
+
+        // Beta download functionality - Transform button to email input
+        document.getElementById('betaDownloadBtn').addEventListener('click', function() {
+            const betaDownloadBtn = document.getElementById('betaDownloadBtn');
+            const betaEmailContainer = document.getElementById('betaEmailContainer');
+            const betaEmailInput = document.getElementById('betaEmailInput');
+            
+            // Add haptic feedback for mobile
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+            
+            // Hide download button and show email form
+            betaDownloadBtn.style.display = 'none';
+            betaEmailContainer.style.display = 'block';
+            
+            // Trigger the show animation
+            setTimeout(() => {
+                betaEmailContainer.classList.add('show');
+                betaEmailInput.focus();
+                if (typeof ensurePlaceholderFits === 'function') {
+                    ensurePlaceholderFits();
+                }
+            }, 50);
+        });
+
+        // Email input focus/blur handlers
+        const betaEmailInput = document.getElementById('betaEmailInput');
+        const betaEmailWrapper = document.querySelector('.beta-email-input-wrapper');
+        
+        betaEmailInput.addEventListener('focus', () => {
+            betaEmailWrapper.classList.add('focused');
+        });
+        
+        betaEmailInput.addEventListener('blur', () => {
+            betaEmailWrapper.classList.remove('focused');
+        });
+
+
+        // Email submit functionality
+        document.getElementById('betaEmailSubmit').addEventListener('click', async function() {
+            const betaEmailInput = document.getElementById('betaEmailInput');
+            const betaEmailSubmit = document.getElementById('betaEmailSubmit');
+            const betaSuccessOverlay = document.getElementById('betaSuccessOverlay');
+            const email = betaEmailInput.value.trim();
+            
+            if (!email) {
+                betaEmailInput.focus();
+                // Add a subtle shake animation
+                betaEmailWrapper.style.animation = 'shake 0.4s ease-in-out';
+                setTimeout(() => {
+                    betaEmailWrapper.style.animation = '';
+                }, 400);
+                return;
+            }
+
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                betaEmailInput.focus();
+                betaEmailWrapper.style.animation = 'shake 0.4s ease-in-out';
+                setTimeout(() => {
+                    betaEmailWrapper.style.animation = '';
+                }, 400);
+                return;
+            }
+            
+            // Disable form during download
+            betaEmailSubmit.disabled = true;
+            betaEmailSubmit.classList.add('loading');
+            
+            // Add haptic feedback for mobile
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+            
+            try {
+                // Track download event with email capture
+                try {
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'beta_download_with_email', { method: 'github_zip' });
+                    }
+                } catch (e) {
+                    console.debug('gtag error', e);
+                }
+
+                // Send email to Google Sheet for beta download tracking
+                const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxhH_gtb3tDh3jrHkZGirQwEVthHKQnngUr4LfZtO6xv9q0PZHgi0J8vkedVhgRyxUn5Q/exec';
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 10000);
+                
+                try {
+                    await fetch(ENDPOINT, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: new URLSearchParams({ 
+                            email: email, 
+                            website: '', 
+                            source: 'beta download' 
+                        }),
+                        signal: controller.signal
+                    });
+                    clearTimeout(timeout);
+                } catch (fetchErr) {
+                    console.debug('Sheet update failed:', fetchErr);
+                    // Continue with download even if sheet update fails
+                }
+                
+                // Trigger actual download
+                window.location.href = 'https://github.com/er-fo/CADAgent/archive/refs/tags/CADAgent.zip';
+                
+                // Show success overlay, then redirect to installation guide
+                setTimeout(() => {
+                    betaSuccessOverlay.classList.add('show');
+                    if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+                    
+                    setTimeout(() => {
+                        window.location.href = '/installation-guide';
+                    }, 1500);
+                }, 200);
+                
+            } catch (err) {
+                console.error(err);
+                betaEmailSubmit.disabled = false;
+                betaEmailSubmit.classList.remove('loading');
+            }
+        });
+
+        // Allow Enter key to submit email
+        betaEmailInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('betaEmailSubmit').click();
+            }
+        });
+
     </script>
         <!-- Off-screen, crawlable SEO block: FAQ + Features + JSON-LD -->
     <div id="seo-hidden" style="position:absolute; left:-9999px; top:-9999px; width:auto; height:auto; overflow:hidden;" aria-hidden="true">

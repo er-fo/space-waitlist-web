@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Installation Guide – CADAgent</title>
+    <meta name="description" content="Complete installation guide for CADAgent - AI-powered 3D CAD modeling. Easy setup for Mac and Windows with Fusion 360.">
+    <meta name="keywords" content="CADAgent install, Fusion 360 addon, AI CAD installation, 3D modeling setup">
+    <meta name="author" content="CADAgent">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="any" href="/logotype.png">
+    <link rel="shortcut icon" href="/logotype.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NS7JY9W36"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);} 
+        gtag('js', new Date());
+        gtag('config', 'G-7NS7JY9W36', { 'anonymize_ip': true });
+    </script>
+    
+    <style>
+        :root {
+            --primary-bg: #000000;
+            --accent-color: #0ea5e9;
+            --accent-hover: #38bdf8;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: #000000;
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                rgba(14,165,233,0.025) 0%,
+                rgba(56,189,248,0.02) 20%,
+                rgba(14,165,233,0.015) 40%,
+                rgba(56,189,248,0.02) 60%,
+                rgba(14,165,233,0.025) 80%,
+                rgba(56,189,248,0.03) 100%
+            );
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: all 200ms ease;
+        }
+
+        .back-link:hover {
+            color: var(--accent-hover);
+            transform: translateX(-2px);
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .guide-content {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 22px;
+            padding: 3rem;
+            backdrop-filter: blur(20px);
+            box-shadow:
+                0 24px 60px rgba(14,165,233,0.08),
+                0 8px 28px rgba(0,0,0,0.35),
+                inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+
+        .step {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .step:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-number {
+            background: var(--accent-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .code-block {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            color: var(--accent-color);
+            background: rgba(14, 165, 233, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .warning {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-title {
+            color: #f87171;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .warning p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .success-title {
+            color: #4ade80;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .success p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 1rem 1.5rem;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 12px;
+            background: rgba(14, 165, 233, 0.1);
+            transition: all 200ms ease;
+            margin-top: 2rem;
+        }
+
+        .github-link:hover {
+            background: rgba(14, 165, 233, 0.15);
+            border-color: rgba(14, 165, 233, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .guide-content {
+                padding: 2rem;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .step-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">
+            ← Back to CADAgent
+        </a>
+
+        <header class="header">
+            <img src="/logotype.png" alt="CADAgent" class="logo">
+            <h1 class="title">Installation Guide</h1>
+            <p class="subtitle">Get CADAgent running in Fusion 360 in minutes</p>
+        </header>
+
+        <div class="guide-content">
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <h2 class="step-title">Download Complete</h2>
+                </div>
+                <div class="step-content">
+                    <p>Great! You've downloaded the CADAgent ZIP file. Extract it to see the <code>CADAgent-CADAgent</code> folder.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <h2 class="step-title">Quick Install (Recommended)</h2>
+                </div>
+                <div class="step-content">
+                    <p>The easiest way to install CADAgent is using our automated installers:</p>
+                    
+                    <div class="code-block">
+                        <strong>macOS:</strong> Double-click <code>CADAgent-CADAgent/Install-CADAgent-macOS.sh</code><br><br>
+                        <strong>Windows:</strong> Double-click <code>CADAgent-CADAgent/Install-CADAgent-Windows.bat</code>
+                    </div>
+
+                    <div class="success">
+                        <div class="success-title">
+                            Success!
+                        </div>
+                        <p>The installer will automatically copy CADAgent to the correct Fusion 360 directory with the proper folder name.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <h2 class="step-title">Manual Install (If needed)</h2>
+                </div>
+                <div class="step-content">
+                    <p>If the automatic installers don't work, follow these manual installation steps:</p>
+                    
+                    <div class="code-block">
+                        <strong>Step 1:</strong> Navigate to your Fusion 360 AddIns directory:<br><br>
+                        
+                        <strong>macOS:</strong><br>
+                        <code>~/Library/Application Support/Autodesk/Autodesk Fusion 360/API/AddIns/</code><br><br>
+                        
+                        <strong>Windows:</strong><br>
+                        <code>C:\Users\[YOUR_USERNAME]\AppData\Roaming\Autodesk\Autodesk Fusion 360\API\AddIns</code><br><br>
+                        
+                        <strong>Step 2:</strong> Copy the <code>CADAgent-CADAgent</code> folder from the downloaded ZIP<br><br>
+                        
+                        <strong>Step 3:</strong> IMPORTANT - Rename the copied folder from <code>CADAgent-CADAgent</code> to just <code>CADAgent</code>
+                    </div>
+
+                    <div class="warning">
+                        <div class="warning-title">
+                            Critical: Folder Name
+                        </div>
+                        <p>The folder in your AddIns directory MUST be named exactly <code>CADAgent</code> (not <code>CADAgent-CADAgent</code>). Fusion 360 will not recognize the add-in if the folder name is incorrect. Replace [YOUR_USERNAME] with your actual Windows username.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <h2 class="step-title">Enable in Fusion 360</h2>
+                </div>
+                <div class="step-content">
+                    <p>Once installed:</p>
+                    <div class="code-block">
+                        1. Open Fusion 360<br>
+                        2. Go to <strong>Utilities</strong> → <strong>Add-Ins</strong><br>
+                        3. Find "CADAgent" in the list<br>
+                        4. Click <strong>Run</strong> to activate
+                    </div>
+                    
+                    <div class="success">
+                        <div class="success-title">
+                            Installation Complete!
+                        </div>
+                        <p>CADAgent is now active in Fusion 360. Start creating 3D models with natural language!</p>
+                    </div>
+                </div>
+            </div>
+
+            <a href="https://github.com/er-fo/CADAgent/blob/main/installation_guide.md" target="_blank" rel="noopener" class="github-link">
+                Full Installation Guide on GitHub
+            </a>
+        </div>
+
+        <footer class="footer">
+            <p>Need help? Check our <a href="https://github.com/er-fo/CADAgent" target="_blank" rel="noopener" style="color: var(--accent-color);">GitHub repository</a> or contact <a href="mailto:hi@cadagentpro.com" style="color: var(--accent-color);">hi@cadagentpro.com</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Track installation guide views
+        try {
+            if (typeof gtag === 'function') {
+                gtag('event', 'installation_guide_view', { method: 'direct' });
+            }
+        } catch (e) {
+            console.debug('gtag error', e);
+        }
+    </script>
+</body>
+</html>
