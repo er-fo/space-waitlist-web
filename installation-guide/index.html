@@ -353,27 +353,48 @@
                     <h2 class="step-title">Manual Install (If needed)</h2>
                 </div>
                 <div class="step-content">
-                    <p>If the automatic installers don't work, follow these manual installation steps:</p>
+                    <p>If the automatic installers don't work, follow these detailed manual installation steps:</p>
                     
                     <div class="code-block">
-                        <strong>Step 1:</strong> Navigate to your Fusion 360 AddIns directory:<br><br>
+                        <strong>Step 1: Find your Fusion 360 AddIns folder</strong><br><br>
                         
-                        <strong>macOS:</strong><br>
-                        <code>~/Library/Application Support/Autodesk/Autodesk Fusion 360/API/AddIns/</code><br><br>
+                        <strong>On macOS:</strong><br>
+                        1. Open Finder<br>
+                        2. Press Cmd+Shift+G (Go to Folder)<br>
+                        3. Paste: <code>~/Library/Application Support/Autodesk/Autodesk Fusion 360/API/AddIns/</code><br>
+                        4. Press Enter<br><br>
                         
-                        <strong>Windows:</strong><br>
-                        <code>C:\Users\[YOUR_USERNAME]\AppData\Roaming\Autodesk\Autodesk Fusion 360\API\AddIns</code><br><br>
+                        <strong>On Windows:</strong><br>
+                        1. Open File Explorer<br>
+                        2. Click in the address bar<br>
+                        3. Paste: <code>C:\Users\[YOUR_USERNAME]\AppData\Roaming\Autodesk\Autodesk Fusion 360\API\AddIns</code><br>
+                        4. Replace [YOUR_USERNAME] with your actual Windows username<br>
+                        5. Press Enter<br><br>
                         
-                        <strong>Step 2:</strong> Copy the <code>CADAgent-CADAgent</code> folder from the downloaded ZIP<br><br>
+                        <strong>Step 2: Prepare the CADAgent folder</strong><br>
+                        1. Go to your Downloads folder<br>
+                        2. Find the extracted <code>CADAgent-CADAgent</code> folder<br>
+                        3. Right-click and copy this folder<br><br>
                         
-                        <strong>Step 3:</strong> IMPORTANT - Rename the copied folder from <code>CADAgent-CADAgent</code> to just <code>CADAgent</code>
+                        <strong>Step 3: Install CADAgent</strong><br>
+                        1. Go back to the Fusion 360 AddIns folder (from Step 1)<br>
+                        2. Paste the <code>CADAgent-CADAgent</code> folder here<br>
+                        3. CRITICAL: Rename the pasted folder from <code>CADAgent-CADAgent</code> to just <code>CADAgent</code><br>
+                        4. The final path should look like: <code>.../AddIns/CADAgent/</code>
                     </div>
 
                     <div class="warning">
                         <div class="warning-title">
-                            Critical: Folder Name
+                            Important: Exact Folder Name Required
                         </div>
-                        <p>The folder in your AddIns directory MUST be named exactly <code>CADAgent</code> (not <code>CADAgent-CADAgent</code>). Fusion 360 will not recognize the add-in if the folder name is incorrect. Replace [YOUR_USERNAME] with your actual Windows username.</p>
+                        <p>The folder inside your AddIns directory MUST be named exactly <code>CADAgent</code> (without the duplicate name). If you see <code>CADAgent-CADAgent</code> in your AddIns folder, rename it to just <code>CADAgent</code>. Fusion 360 looks for this exact folder name to load the add-in.</p>
+                    </div>
+
+                    <div class="success">
+                        <div class="success-title">
+                            Verify Installation
+                        </div>
+                        <p>After copying, you should see a <code>CADAgent</code> folder in your AddIns directory containing files like <code>CADAgent.py</code> and <code>CADAgent.manifest</code>.</p>
                     </div>
                 </div>
             </div>
