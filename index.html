@@ -1269,6 +1269,30 @@
             color: var(--accent-color);
         }
 
+        /* X icon in top left */
+        .x-icon-link {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            color: var(--text-secondary);
+            transition: color 0.3s ease, transform 0.3s ease;
+            z-index: 100;
+            opacity: 0.7;
+        }
+
+        .x-icon-link:hover {
+            color: var(--text-primary);
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        @media (max-width: 640px) {
+            .x-icon-link {
+                top: 1rem;
+                left: 1rem;
+            }
+        }
+
 
         @media (max-width: 640px) {
             .main-section {
@@ -1429,6 +1453,12 @@
     </style>
 </head>
 <body>
+    <!-- X/Twitter Icon in top left -->
+    <a href="https://x.com/etwaldemar?s=21" target="_blank" rel="noopener" class="x-icon-link" aria-label="X (Twitter)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+    </a>
     <section class="main-section" id="mainSection">
     <div class="container">
         <div class="header-section center-title">
@@ -1538,6 +1568,8 @@
             <a href="mailto:hi@cadagentpro.com" class="footer-email">hi@cadagentpro.com</a>
             <div class="footer-divider"></div>
             <a href="https://github.com/er-fo/CADAgent/tree/main" target="_blank" rel="noopener" class="footer-email">GitHub</a>
+            <div class="footer-divider"></div>
+            <a href="https://x.com/etwaldemar?s=21" target="_blank" rel="noopener" class="footer-email">𝕏</a>
         </div>
     </footer>
 
