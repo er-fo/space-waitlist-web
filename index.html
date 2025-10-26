@@ -1516,46 +1516,23 @@
     </div>
         
         <div class="scroll-arrow" id="scrollArrow">
-            <span class="scroll-arrow-text">Download Beta</span>
+            <span class="scroll-arrow-text">Beta download</span>
             <div class="scroll-arrow-icon"></div>
         </div>
     </section>
 
     <section class="beta-section" id="betaSection">
         <div class="beta-content">
-            <div class="beta-glass-container">
-                <div class="beta-pretitle">Beta access</div>
-                <h2 class="beta-title">Download the beta of <span class="heading-lockup"><span class="brand-lockup"><span class="cad-text">CAD</span><span class="agent-text">Agent</span></span><img src="logotype.png" alt="CADAgent" class="download-logo heading-logo"></span> and help shape the future.</h2>
+            <div class="beta-pretitle">Beta closed</div>
+            <h2 class="beta-title">Thanks for your interest — v1.0 is launching soon.</h2>
+            <p class="system-requirements">Join the waitlist to get notified on launch. Prefer to tinker? The add‑in is available on <a href="https://github.com/er-fo/CADAgent/tree/main" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">GitHub</a>.</p>
+            <div class="version-row"><span class="version-badge">v1.0 — coming soon</span></div>
 
-                <div class="beta-download-container">
-                    <button class="beta-download-btn" id="betaDownloadBtn">
-                        Download ZIP
-                        <span class="btn-chevron" aria-hidden="true"></span>
-                    </button>
-                    
-                    <!-- Email input form (hidden initially) -->
-                    <div class="beta-email-container" id="betaEmailContainer" style="display: none;">
-                        <div class="beta-email-input-wrapper">
-                            <input 
-                                type="email" 
-                                class="beta-email-input" 
-                                placeholder="Enter your email to proceed"
-                                required
-                                id="betaEmailInput"
-                            >
-                            <button type="button" class="beta-email-submit" id="betaEmailSubmit">
-                                Proceed
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="beta-success-overlay" id="betaSuccessOverlay">Download starting!</div>
-
-                <div class="beta-info">
-                    <h3>Create professional 3D models by simply describing what you need. No menus, no tutorials, no complexity.</h3>
-                    <p class="system-requirements">Mac & Windows • Fusion 360 (v2.0.16000+) • <a href="https://github.com/er-fo/CADAgent/tree/main" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">Open Source</a></p>
-                    <div class="version-row"><span class="version-badge">v0.1.34-beta</span></div>
-                </div>
+            <div class="beta-download-container" style="margin-top: 1rem;">
+                <button class="beta-download-btn" id="betaWaitlistBtn">
+                    Join waitlist
+                    <span class="btn-chevron" aria-hidden="true"></span>
+                </button>
             </div>
         </div>
     </section>
@@ -1714,139 +1691,16 @@
         
     // Removed auto-scroll on wheel and touch to allow free scrolling; arrow click still smooth-scrolls
 
-        // Beta download functionality - Transform button to email input
-        document.getElementById('betaDownloadBtn').addEventListener('click', function() {
-            const betaDownloadBtn = document.getElementById('betaDownloadBtn');
-            const betaEmailContainer = document.getElementById('betaEmailContainer');
-            const betaEmailInput = document.getElementById('betaEmailInput');
-            
-            // Add haptic feedback for mobile
-            if (navigator.vibrate) {
-                navigator.vibrate(50);
+        // Beta section waitlist button scrolls to the main waitlist form
+        (function(){
+            const btn = document.getElementById('betaWaitlistBtn');
+            if (btn) {
+                btn.addEventListener('click', function(){
+                    if (navigator.vibrate) navigator.vibrate(50);
+                    document.getElementById('mainSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
             }
-            
-            // Hide download button and show email form
-            betaDownloadBtn.style.display = 'none';
-            betaEmailContainer.style.display = 'block';
-            
-            // Trigger the show animation
-            setTimeout(() => {
-                betaEmailContainer.classList.add('show');
-                betaEmailInput.focus();
-                if (typeof ensurePlaceholderFits === 'function') {
-                    ensurePlaceholderFits();
-                }
-            }, 50);
-        });
-
-        // Email input focus/blur handlers
-        const betaEmailInput = document.getElementById('betaEmailInput');
-        const betaEmailWrapper = document.querySelector('.beta-email-input-wrapper');
-        
-        betaEmailInput.addEventListener('focus', () => {
-            betaEmailWrapper.classList.add('focused');
-        });
-        
-        betaEmailInput.addEventListener('blur', () => {
-            betaEmailWrapper.classList.remove('focused');
-        });
-
-
-        // Email submit functionality
-        document.getElementById('betaEmailSubmit').addEventListener('click', async function() {
-            const betaEmailInput = document.getElementById('betaEmailInput');
-            const betaEmailSubmit = document.getElementById('betaEmailSubmit');
-            const betaSuccessOverlay = document.getElementById('betaSuccessOverlay');
-            const email = betaEmailInput.value.trim();
-            
-            if (!email) {
-                betaEmailInput.focus();
-                // Add a subtle shake animation
-                betaEmailWrapper.style.animation = 'shake 0.4s ease-in-out';
-                setTimeout(() => {
-                    betaEmailWrapper.style.animation = '';
-                }, 400);
-                return;
-            }
-
-            // Basic email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                betaEmailInput.focus();
-                betaEmailWrapper.style.animation = 'shake 0.4s ease-in-out';
-                setTimeout(() => {
-                    betaEmailWrapper.style.animation = '';
-                }, 400);
-                return;
-            }
-            
-            // Disable form during download
-            betaEmailSubmit.disabled = true;
-            betaEmailSubmit.classList.add('loading');
-            
-            // Add haptic feedback for mobile
-            if (navigator.vibrate) {
-                navigator.vibrate(50);
-            }
-            
-            try {
-                // Track download event with email capture
-                try {
-                    if (typeof gtag === 'function') {
-                        gtag('event', 'beta_download_with_email', { method: 'github_zip' });
-                    }
-                } catch (e) {
-                    console.debug('gtag error', e);
-                }
-
-                // Send email to Google Sheet for beta download tracking
-                const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxhH_gtb3tDh3jrHkZGirQwEVthHKQnngUr4LfZtO6xv9q0PZHgi0J8vkedVhgRyxUn5Q/exec';
-                const controller = new AbortController();
-                const timeout = setTimeout(() => controller.abort(), 10000);
-                
-                try {
-                    await fetch(ENDPOINT, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        body: new URLSearchParams({ 
-                            email: email, 
-                            website: '', 
-                            source: 'beta download' 
-                        }),
-                        signal: controller.signal
-                    });
-                    clearTimeout(timeout);
-                } catch (fetchErr) {
-                    console.debug('Sheet update failed:', fetchErr);
-                    // Continue with download even if sheet update fails
-                }
-                
-                // Trigger actual download
-                window.location.href = 'https://github.com/er-fo/CADAgent/archive/refs/tags/CADagent-beta-v01.34-fixed.zip';
-                
-                // Show success overlay, then redirect to installation guide
-                setTimeout(() => {
-                    betaSuccessOverlay.classList.add('show');
-                    if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-                    
-                    setTimeout(() => {
-                        window.location.href = '/installation-guide';
-                    }, 1500);
-                }, 200);
-                
-            } catch (err) {
-                console.error(err);
-                betaEmailSubmit.disabled = false;
-                betaEmailSubmit.classList.remove('loading');
-            }
-        });
-
-        // Allow Enter key to submit email
-        betaEmailInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('betaEmailSubmit').click();
-            }
-        });
+        })();
 
     </script>
         <!-- Off-screen, crawlable SEO block: FAQ + Features + JSON-LD -->
