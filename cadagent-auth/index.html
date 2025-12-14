@@ -66,11 +66,86 @@
     .support-text a:hover {
       color: #cbd5e1;
     }
+
+    #fallback {
+      display: none;
+      max-width: 600px;
+      width: 100%;
+      margin-top: 2rem;
+    }
+
+    #fallback p {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #cbd5e1;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    #fallback textarea {
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.5rem;
+      color: #f8fafc;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    #fallback textarea:focus {
+      outline: none;
+      border-color: rgba(14, 165, 233, 0.4);
+      background: rgba(14, 165, 233, 0.1);
+    }
+
+    #error {
+      color: #f87171;
+      font-size: 1rem;
+      font-weight: 400;
+      margin-top: 1.5rem;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
   <h1 class="title">Create something awesome</h1>
-  <p class="subtitle">You're all set—head back to Fusion</p>
+  <p class="subtitle">Account created successfully—head back to Fusion to log in</p>
   <p class="support-text">Need help? Email <a href="mailto:hi@cadagentpro.com">hi@cadagentpro.com</a></p>
+
+  <div id="fallback">
+    <p>Couldn't open Fusion automatically. Copy tokens and re-open the link on the machine with Fusion installed.</p>
+    <textarea id="access" readonly></textarea>
+    <textarea id="refresh" readonly></textarea>
+  </div>
+
+  <div id="error"></div>
+
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.hash.slice(1));
+      const access = params.get('access_token');
+      const refresh = params.get('refresh_token');
+
+      if (access && refresh) {
+        // Try to open Fusion via custom protocol
+        const target = `cadagent://auth-callback#access_token=${encodeURIComponent(access)}&refresh_token=${encodeURIComponent(refresh)}`;
+        window.location.replace(target);
+
+        // Fallback: show UI if protocol handler missing
+        setTimeout(() => {
+          document.getElementById('fallback').style.display = 'block';
+          document.getElementById('access').value = access;
+          document.getElementById('refresh').value = refresh;
+        }, 1200);
+      } else {
+        document.getElementById('error').textContent = 'No tokens in link.';
+      }
+    })();
+  </script>
 </body>
 </html>
