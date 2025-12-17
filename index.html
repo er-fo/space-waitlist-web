@@ -19,6 +19,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,300;0,400;1,400&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap" rel="stylesheet">
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <!-- Google Analytics (GA4) - replace G-XXXXXXXXXX with your Measurement ID -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NS7JY9W36"></script>
     <script>
@@ -44,6 +48,7 @@
             --shadow-light: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
             --font-primary: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+            --nav-height: 72px;
         }
 
         * {
@@ -83,12 +88,100 @@
         }
 
         .main-section {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
             position: relative;
+        }
+
+        .site-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border-bottom: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+        }
+
+        .site-nav .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .nav-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--text-primary);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+        }
+
+        .nav-brand img {
+            width: 34px;
+            height: 34px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 8px 18px rgba(14,165,233,0.28));
+        }
+
+        .nav-links {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.55rem 0.9rem;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
+            border: none;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus-visible {
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .nav-link.active {
+            color: var(--text-primary);
+            text-shadow: 0 0 20px rgba(14,165,233,0.8), 0 0 10px rgba(14,165,233,0.6);
+        }
+
+        .auth-btn {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            font-family: var(--font-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
         }
 
         .container {
@@ -1269,32 +1362,20 @@
             color: var(--accent-color);
         }
 
-        /* X icon in top left */
-        .x-icon-link {
-            position: fixed;
-            top: 2rem;
-            left: 2rem;
-            color: var(--text-secondary);
-            transition: color 0.3s ease, transform 0.3s ease;
-            z-index: 100;
-            opacity: 0.7;
-        }
-
-        .x-icon-link:hover {
-            color: var(--text-primary);
-            transform: scale(1.1);
-            opacity: 1;
-        }
-
         @media (max-width: 640px) {
-            .x-icon-link {
-                top: 1rem;
-                left: 1rem;
+            .site-nav .nav-inner {
+                padding: 12px 16px;
             }
-        }
 
+            .nav-links {
+                gap: 0.35rem;
+            }
 
-        @media (max-width: 640px) {
+            .nav-link {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.9rem;
+            }
+
             .main-section {
                 padding: 1rem;
             }
@@ -1453,12 +1534,6 @@
     </style>
 </head>
 <body>
-    <!-- X/Twitter Icon in top left -->
-    <a href="https://x.com/etwaldemar?s=21" target="_blank" rel="noopener" class="x-icon-link" aria-label="X (Twitter)">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-        </svg>
-    </a>
     <section class="main-section" id="mainSection">
     <div class="container">
         <div class="header-section center-title">
@@ -1514,27 +1589,6 @@
         </div>
     -->
     </div>
-        
-        <div class="scroll-arrow" id="scrollArrow">
-            <span class="scroll-arrow-text">Beta download</span>
-            <div class="scroll-arrow-icon"></div>
-        </div>
-    </section>
-
-    <section class="beta-section" id="betaSection">
-        <div class="beta-content">
-            <div class="beta-pretitle">Beta closed</div>
-            <h2 class="beta-title">Thanks for your interest — v1.0 is launching soon.</h2>
-            <p class="system-requirements">Join the waitlist to get notified on launch. Prefer to tinker? The add‑in is available on <a href="https://github.com/er-fo/CADAgent/tree/main" target="_blank" rel="noopener" style="color: var(--accent-color); text-decoration: none;">GitHub</a>.</p>
-            <div class="version-row"><span class="version-badge">v1.0 — coming soon</span></div>
-
-            <div class="beta-download-container" style="margin-top: 1rem;">
-                <button class="beta-download-btn" id="betaWaitlistBtn">
-                    Join waitlist
-                    <span class="btn-chevron" aria-hidden="true"></span>
-                </button>
-            </div>
-        </div>
     </section>
 
     <footer class="footer">
@@ -1669,38 +1723,6 @@
             }
         })();
 
-        // Smooth scroll functionality
-        let isScrolling = false;
-        
-        function scrollToBeta() {
-            if (isScrolling) return;
-            isScrolling = true;
-            
-            document.getElementById('betaSection').scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-            
-            setTimeout(() => {
-                isScrolling = false;
-            }, 1000);
-        }
-        
-        // Arrow click handler
-        document.getElementById('scrollArrow').addEventListener('click', scrollToBeta);
-        
-    // Removed auto-scroll on wheel and touch to allow free scrolling; arrow click still smooth-scrolls
-
-        // Beta section waitlist button scrolls to the main waitlist form
-        (function(){
-            const btn = document.getElementById('betaWaitlistBtn');
-            if (btn) {
-                btn.addEventListener('click', function(){
-                    if (navigator.vibrate) navigator.vibrate(50);
-                    document.getElementById('mainSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                });
-            }
-        })();
 
     </script>
         <!-- Off-screen, crawlable SEO block: FAQ + Features + JSON-LD -->
