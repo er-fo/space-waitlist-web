@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy – CADAgent</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="any" href="/logotype.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+        :root {
+            --primary-bg: #000000;
+            --accent-color: #0ea5e9;
+            --accent-hover: #38bdf8;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: #334155;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: #000000;
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg,
+                rgba(14,165,233,0.025) 0%,
+                rgba(56,189,248,0.02) 20%,
+                rgba(14,165,233,0.015) 40%,
+                rgba(56,189,248,0.02) 60%,
+                rgba(14,165,233,0.025) 80%,
+                rgba(56,189,248,0.03) 100%
+            );
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .footer {
+            background: #000000;
+            border-top: 1px solid var(--glass-border);
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: var(--text-primary);
+        }
+
+        .footer-brand .agent {
+            font-weight: 200;
+        }
+
+        .footer-divider {
+            width: 1px;
+            height: 24px;
+            background: var(--glass-border);
+            margin: 0 0.5rem;
+        }
+
+        .footer-email {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-email:hover {
+            color: var(--accent-color);
+        }
+
+        #content {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #content.loaded {
+            opacity: 1;
+        }
+
+        #content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: -0.025em;
+            color: var(--text-primary);
+        }
+
+        #content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            letter-spacing: -0.015em;
+        }
+
+        #content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        #content ul, #content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        #content li {
+            margin-bottom: 0.5rem;
+        }
+
+        #content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        #content a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        #content a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        #content code {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.9em;
+            color: var(--accent-color);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 4rem 0;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 3rem 1.5rem;
+            }
+
+            #content h1 {
+                font-size: 2rem;
+            }
+
+            #content h2 {
+                font-size: 1.25rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 0.75rem;
+                text-align: center;
+            }
+
+            .footer-divider {
+                width: 24px;
+                height: 1px;
+                margin: 0;
+            }
+
+            .footer-brand {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="content">
+            <div class="loading">Loading privacy policy...</div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <img src="/logotype.png" alt="CADAgent" class="footer-logo">
+            <span class="footer-brand">CAD<span class="agent">Agent</span></span>
+            <div class="footer-divider"></div>
+            <a href="mailto:hi@cadagentpro.com" class="footer-email">hi@cadagentpro.com</a>
+            <div class="footer-divider"></div>
+            <a href="https://github.com/er-fo/CADAgent/tree/main" target="_blank" rel="noopener" class="footer-email">GitHub</a>
+            <div class="footer-divider"></div>
+            <a href="https://x.com/etwaldemar?s=21" target="_blank" rel="noopener" class="footer-email">𝕏</a>
+        </div>
+    </footer>
+
+    <script>
+        // Fetch and render the markdown file
+        async function loadPrivacyPolicy() {
+            try {
+                const response = await fetch('/privacy-policy.md');
+                if (!response.ok) {
+                    throw new Error('Failed to load privacy policy');
+                }
+
+                const markdown = await response.text();
+                const html = marked.parse(markdown);
+
+                const contentDiv = document.getElementById('content');
+                contentDiv.innerHTML = html;
+
+                // Fade in the content
+                setTimeout(() => {
+                    contentDiv.classList.add('loaded');
+                }, 50);
+
+            } catch (error) {
+                console.error('Error loading privacy policy:', error);
+                document.getElementById('content').innerHTML =
+                    '<h1>Privacy Policy</h1><p style="color: #f87171;">Failed to load privacy policy. Please try again later.</p>';
+                document.getElementById('content').classList.add('loaded');
+            }
+        }
+
+        // Load the policy when the page loads
+        loadPrivacyPolicy();
+    </script>
+</body>
+</html>
