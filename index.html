@@ -528,6 +528,34 @@
             opacity: 0.8;
         }
 
+        .fusion-integration {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 2.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .fusion-integration:hover {
+            color: var(--text-secondary);
+        }
+
+        .fusion-logo {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            filter: grayscale(1) brightness(1.2);
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .fusion-integration:hover .fusion-logo {
+            opacity: 0.7;
+            filter: grayscale(1) brightness(1.5);
+        }
+
         .integration-showcase {
             margin-top: 4rem;
             position: relative;
@@ -1531,6 +1559,83 @@
                 font-size: 0.9rem;
             }
         }
+
+        /* Demo Showcase Section */
+        .demo-showcase {
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        .demo-content {
+            max-width: 1500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .demo-headline {
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .demo-subtext {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .demo-video-container {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 0.5rem;
+            backdrop-filter: blur(12px);
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1);
+        }
+
+        .demo-video-container:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 48px rgba(14, 165, 233, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .demo-video {
+            width: 100%;
+            height: auto;
+            border-radius: 1rem;
+            display: block;
+            background: #000;
+        }
+
+        @media (max-width: 640px) {
+            .demo-showcase {
+                margin-top: 3rem;
+            }
+
+            .demo-headline {
+                font-size: 1.5rem;
+            }
+
+            .demo-subtext {
+                font-size: 1rem;
+            }
+
+            .demo-video-container {
+                padding: 0.35rem;
+                border-radius: 1.25rem;
+            }
+
+            .demo-video {
+                border-radius: 0.875rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1575,6 +1680,26 @@
         <p class="beta-note" id="betaNote">Join for prioritized early access</p>
     </div>
     </div>
+
+    <!-- Demo Showcase Section -->
+    <section class="demo-showcase">
+        <div class="demo-content">
+            <h2 class="demo-headline">See CADAgent in action</h2>
+            <p class="demo-subtext">Watch a minute walkthrough of the workflow inside Fusion 360.</p>
+
+            <div class="demo-video-container">
+                <video
+                    class="demo-video"
+                    controls
+                    preload="metadata"
+                    aria-label="CADAgent demo video showing workflow in Fusion 360"
+                >
+                    <source src="CADAgent-demo_3.6x_8s-90s.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </section>
     <!--
     <div class="integration-showcase">
             <div class="integration-container">
@@ -1642,7 +1767,7 @@
             }
             
             try {
-                const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxhH_gtb3tDh3jrHkZGirQwEVthHKQnngUr4LfZtO6xv9q0PZHgi0J8vkedVhgRyxUn5Q/exec';
+                const ENDPOINT = 'https://script.google.com/macros/s/AKfycbwnDuaYVJ7bsdohlp7U8hct7NddMUIA3Y-5GmoEBxjwcAcdjBds8hVuX7_e1bKJmVtKuw/exec';
                 const controller = new AbortController();
                 const timeout = setTimeout(() => controller.abort(), 10000);
                 await fetch(ENDPOINT, {
