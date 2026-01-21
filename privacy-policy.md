@@ -51,7 +51,7 @@ This Privacy Policy explains how we collect, use, store, and protect information
 - **Authentication data:** Collected via Supabase magic link/OTP during sign-in.
 - **CAD model context:** Extracted automatically when users submit natural language requests through the add-in palette.
 - **Usage data:** Logged automatically during session execution in `runs/<timestamp>_session_<id>/` (hierarchical directory structure).
-- **Technical data:** Logged via rotating log files (`cadagent.log`, max 50MB total, 5 backups).
+- **Technical data:** Logged via rpotating log files (`cadagent.log`, max 50MB total, 5 backups).
 
 ## 5. How Data Is Used
 - **Authentication:** Verify identity and maintain secure sessions.
@@ -65,8 +65,7 @@ This Privacy Policy explains how we collect, use, store, and protect information
 ### Supabase (Authentication Provider)
 - **Data shared:** Email addresses, user IDs, authentication tokens.
 - **Purpose:** User authentication and session management.
-- **Location:** Hosted at `fcxnngctkfwpfbbhrmbs.supabase.co`.
-- **Privacy policy:** [Link to Supabase's privacy policy].
+- **Privacy policy:** [[Link to Supabase's privacy policy](https://supabase.com/privacy)].
 
 ### LLM Providers (User’s Choice – BYOK)
 - Providers: Anthropic Claude API, OpenAI API, Google Generative AI API.
