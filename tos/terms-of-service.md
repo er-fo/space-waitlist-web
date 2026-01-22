@@ -6,6 +6,11 @@ Effective until replaced.
 
 By accessing or using CADAgent you agree to these Terms. If you do not agree, do not use the service.
 
+## Controller & Contact Information
+- **Controller:** Erik Fornlund (individual developer)
+- **Email:** eriknollett@gmail.com
+- **Purpose:** Operating CADAgent, an AI-powered natural language interface for Autodesk Fusion 360.
+
 ## 1. Service Description
 CADAgent provides an AI-powered natural language interface for Autodesk Fusion 360 that allows users to generate CAD modeling operations using large language models (LLMs). The service operates on a Bring Your Own Key (BYOK) basis, requiring users to provide their own API keys for Anthropic Claude, OpenAI, or Google Generative AI services.
 
