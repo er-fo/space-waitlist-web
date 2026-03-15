@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Add-in for Fusion 360 – CADAgent | Natural Language to Parametric CAD</title>
+    <meta name="description" content="CADAgent is a free, open-source AI add-in for Autodesk Fusion 360. Create parametric sketches, extrusions, fillets, and more from natural language descriptions."/>
+    <meta property="og:title" content="AI Add-in for Fusion 360 – CADAgent | Natural Language to Parametric CAD"/>
+    <meta property="og:description" content="CADAgent is a free, open-source AI add-in for Autodesk Fusion 360. Create parametric sketches, extrusions, fillets, and more from natural language descriptions."/>
+    <meta property="og:url" content="https://cadagent.co/fusion-360-ai-add-in/"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://cadagent.co/demo_image.png"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:image" content="https://cadagent.co/demo_image.png"/>
+    <link rel="canonical" href="https://cadagent.co/fusion-360-ai-add-in/"/>
+    <link rel="icon" type="image/png" sizes="any" href="/logotype.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-color: #0ea5e9;
+            --accent-hover: #38bdf8;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-primary);
+            background: #000;
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        body::before {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, rgba(14,165,233,0.025) 0%, rgba(56,189,248,0.02) 50%, rgba(14,165,233,0.025) 100%);
+            pointer-events: none; z-index: -1;
+        }
+        .header { border-bottom: 1px solid var(--glass-border); padding: 1.5rem 1rem; }
+        .header-inner { max-width: 1000px; margin: 0 auto; }
+        .header a { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 1rem; font-weight: 600; color: var(--text-primary); text-decoration: none; transition: color 0.2s; }
+        .header a:hover { color: var(--accent-color); }
+        .header img { width: 24px; height: 24px; }
+        .agent { font-weight: 200; }
+        .container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+        h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: -0.025em; }
+        h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.015em; }
+        p { margin-bottom: 1rem; color: var(--text-secondary); font-size: 1.05rem; }
+        a { color: var(--accent-color); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent-hover); text-decoration: underline; }
+        ul { margin-bottom: 1rem; padding-left: 1.5rem; color: var(--text-secondary); }
+        li { margin-bottom: 0.5rem; }
+        strong { color: var(--text-primary); font-weight: 600; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--glass-border); }
+        .nav-links a { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border: 1px solid var(--glass-border); border-radius: 0.5rem; font-size: 0.9rem; color: var(--text-secondary); background: var(--glass-bg); transition: all 0.2s; }
+        .nav-links a:hover { border-color: var(--accent-color); color: var(--accent-color); text-decoration: none; }
+        .footer { background: #000; border-top: 1px solid var(--glass-border); padding: 1.5rem 1rem; }
+        .footer-content { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; color: var(--text-secondary); }
+        .footer-content a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+        .footer-content a:hover { color: var(--accent-color); }
+        .footer-divider { width: 1px; height: 20px; background: var(--glass-border); }
+        @media (max-width: 640px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.25rem; }
+            .footer-content { flex-direction: column; gap: 0.5rem; }
+            .footer-divider { width: 24px; height: 1px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="/"><img src="/logotype.png" alt="" aria-hidden="true"><span>CAD<span class="agent">Agent</span></span></a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>AI Add-in for Fusion 360</h1>
+
+        <p>Fusion 360 ships with a powerful scripting API (Python and C++) that lets you automate nearly every modeling operation, but Autodesk has been slow to integrate AI into the design workflow itself. The built-in generative design tools focus on topology optimization for specific load cases — useful, but not the same as having an intelligent assistant that understands what you're trying to model. A handful of third-party scripts exist for batch operations and parameter sweeps, yet none of them bridge the gap between a plain-English description and actual parametric geometry.</p>
+
+        <p>That gap is what prompted the development of CADAgent. It is a free, open-source Fusion 360 add-in that connects Anthropic's Claude to the Fusion 360 API, letting you describe parts and features in natural language and get real, editable timeline features in return. No mesh exports, no cloud lock-in, no leaving your existing Fusion 360 workflow.</p>
+
+        <h2>What CADAgent does</h2>
+
+        <p>CADAgent sits inside Fusion 360 as a standard add-in panel. You type a description of the geometry you want — "create a 40mm square sketch on the XY plane and extrude it 20mm" or "add a 2mm fillet to all edges of body1" — and the add-in sends that description to Anthropic's Claude API. Claude interprets your intent and generates the corresponding Fusion 360 Python API calls, which CADAgent then executes directly in your active design.</p>
+
+        <p>The critical distinction is that every operation CADAgent performs creates <strong>real parametric timeline features</strong>. A sketch created by CADAgent is an actual sketch in the Fusion 360 timeline with editable dimensions and constraints. An extrusion is a real ExtrudeFeature with a distance parameter you can change later. This means your AI-generated geometry integrates seamlessly with manually created features, and you can go back and modify any dimension or suppress any feature exactly as you would with hand-built geometry.</p>
+
+        <p>CADAgent uses your own Anthropic API key. Your design data is sent to the Claude API for interpretation, but nothing is stored on CADAgent's servers because there are no CADAgent servers in the loop — the add-in communicates directly from your machine to the Anthropic API.</p>
+
+        <h2>How it differs from other approaches</h2>
+
+        <p>The most common AI-assisted CAD workflow right now involves pasting a prompt into ChatGPT or a similar LLM, getting back an OpenSCAD script or an STL file, and importing the result into your CAD tool. This works for quick visualization, but the output is a dead-end: mesh geometry cannot be parametrically edited, it does not carry dimensional constraints, and it is rarely manufacturing-ready without significant rework. You end up with a triangle soup that looks roughly like what you described but lacks the engineering rigor of a proper feature tree.</p>
+
+        <p>Cloud-based AI CAD platforms take a different approach by building their own modeling kernel and UI around an AI-first workflow. The trade-off is vendor lock-in. Your designs live in their ecosystem, export options may be limited, and if the service shuts down or changes pricing, your work is stuck. For engineers already invested in Fusion 360 with existing projects, libraries, and manufacturing pipelines, switching platforms is a non-trivial cost.</p>
+
+        <p>Fusion 360's own AI features are currently focused on generative design (topology optimization given loads and constraints) and a few auto-complete suggestions in sketching. These are valuable in their respective niches, but they don't address the general case of "I know what I want to model, I just want to describe it instead of clicking through menus."</p>
+
+        <p>CADAgent operates directly inside Fusion 360, writes to the native timeline, and requires no new platform or file format. You keep your existing workflow and add a natural language input layer on top of it.</p>
+
+        <h2>Supported operations</h2>
+
+        <p>CADAgent can generate the following Fusion 360 features from natural language descriptions:</p>
+
+        <ul>
+            <li><strong>Sketches</strong> — lines, arcs, circles, rectangles, polygons, splines, and sketch constraints on any plane or face</li>
+            <li><strong>Extrusions</strong> — new body, join, cut, and intersect with distance, symmetric, or to-object extents</li>
+            <li><strong>Fillets</strong> — constant and variable radius fillets on edges and faces</li>
+            <li><strong>Chamfers</strong> — equal distance, two-distance, and distance-angle chamfers</li>
+            <li><strong>Threads</strong> — internal and external threads with standard thread specifications</li>
+            <li><strong>Patterns</strong> — rectangular and circular patterns of features or bodies</li>
+            <li><strong>Boolean operations</strong> — union, subtract, and intersect between bodies</li>
+        </ul>
+
+        <p>Each operation is executed as a discrete timeline feature, so you can roll back the timeline, edit parameters, or suppress individual features after generation.</p>
+
+        <h2>Getting started</h2>
+
+        <p>Installation takes a few minutes. You download the add-in files from the <a href="https://github.com/er-fo/CADAgent">GitHub repository</a>, place them in your Fusion 360 add-ins directory, and enter your Anthropic API key in the settings panel. The full walkthrough — including platform-specific paths for Windows and macOS — is on the <a href="/install/">installation guide</a> page.</p>
+
+        <p>Once installed, CADAgent appears as a panel in the Fusion 360 toolbar. Open a new or existing design, type what you want to create, and the geometry appears in your timeline. No additional software, accounts, or subscriptions required beyond the Anthropic API key.</p>
+
+        <nav class="nav-links" aria-label="Related pages">
+            <a href="/">Home</a>
+            <a href="/install/">Installation Guide</a>
+            <a href="/natural-language-cad/">Natural Language CAD</a>
+            <a href="/use-cases/">Use Cases</a>
+            <a href="/about/">About</a>
+        </nav>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="/">CAD<span class="agent">Agent</span></a>
+            <span class="footer-divider"></span>
+            <a href="https://github.com/er-fo/CADAgent" target="_blank" rel="noopener">GitHub</a>
+            <span class="footer-divider"></span>
+            <a href="mailto:hi@cadagent.co">hi@cadagent.co</a>
+            <span class="footer-divider"></span>
+            <a href="/tos/">Terms</a>
+            <span class="footer-divider"></span>
+            <a href="/privacy/">Privacy</a>
+        </div>
+    </footer>
+</body>
+</html>

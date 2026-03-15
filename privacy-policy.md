@@ -117,4 +117,4 @@ This Privacy Policy explains how we collect, use, store, and protect information
 CADAgent is not directed to individuals under 18 years of age. If you are under 18, please do not use this service or provide any personal information.
 
 ## 12. Policy Updates
-We may modify this Privacy Policy at any time. Changes will be posted at [https://cadagentpro.com/privacy] and users will be notified via [email and/or in-app notification]. Continued use after changes become effective constitutes acceptance of the updated policy.
+We may modify this Privacy Policy at any time. Changes will be posted at [https://cadagent.co/privacy] and users will be notified via [email and/or in-app notification]. Continued use after changes become effective constitutes acceptance of the updated policy.

@@ -4,7 +4,7 @@ This repository contains the landing page and website for **CADagent PRO**, the 
 
 ## Website
 
-- **Live Site**: [cadagentpro.com](https://cadagentpro.com)
+- **Live Site**: [cadagent.co](https://cadagent.co)
 - **Landing Page**: Waitlist capture for early access
 - **Documentation**: Terms, Privacy Policy, and project information
 
@@ -34,7 +34,7 @@ This is a static website deployed via GitHub Pages. To make changes:
 
 ### Images index
 
-- A simple index is available at `/images/` (e.g. https://cadagentpro.com/images/) which lists and links to files in the `images/` folder — useful for embedding direct image URLs in emails and other assets.
+- A simple index is available at `/images/` (e.g. https://cadagent.co/images/) which lists and links to files in the `images/` folder — useful for embedding direct image URLs in emails and other assets.
 
 ## Brand Guidelines
 

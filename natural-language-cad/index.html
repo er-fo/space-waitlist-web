@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Language CAD – Text to Parametric 3D Models with CADAgent</title>
+    <meta name="description" content="Turn natural language descriptions into real parametric CAD geometry. CADAgent uses AI to generate editable Fusion 360 features from plain English — not mesh, not STL."/>
+    <meta property="og:title" content="Natural Language CAD – Text to Parametric 3D Models with CADAgent"/>
+    <meta property="og:description" content="Turn natural language descriptions into real parametric CAD geometry. CADAgent uses AI to generate editable Fusion 360 features from plain English — not mesh, not STL."/>
+    <meta property="og:url" content="https://cadagent.co/natural-language-cad/"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://cadagent.co/demo_image.png"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:image" content="https://cadagent.co/demo_image.png"/>
+    <link rel="canonical" href="https://cadagent.co/natural-language-cad/"/>
+    <link rel="icon" type="image/png" sizes="any" href="/logotype.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-color: #0ea5e9;
+            --accent-hover: #38bdf8;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-primary);
+            background: #000;
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        body::before {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, rgba(14,165,233,0.025) 0%, rgba(56,189,248,0.02) 50%, rgba(14,165,233,0.025) 100%);
+            pointer-events: none; z-index: -1;
+        }
+        .header { border-bottom: 1px solid var(--glass-border); padding: 1.5rem 1rem; }
+        .header-inner { max-width: 1000px; margin: 0 auto; }
+        .header a { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 1rem; font-weight: 600; color: var(--text-primary); text-decoration: none; transition: color 0.2s; }
+        .header a:hover { color: var(--accent-color); }
+        .header img { width: 24px; height: 24px; }
+        .agent { font-weight: 200; }
+        .container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+        h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: -0.025em; }
+        h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.015em; }
+        p { margin-bottom: 1rem; color: var(--text-secondary); font-size: 1.05rem; }
+        a { color: var(--accent-color); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent-hover); text-decoration: underline; }
+        ul { margin-bottom: 1rem; padding-left: 1.5rem; color: var(--text-secondary); }
+        li { margin-bottom: 0.5rem; }
+        strong { color: var(--text-primary); font-weight: 600; }
+        code { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 0.25rem; padding: 0.15rem 0.4rem; font-size: 0.95rem; color: var(--accent-color); }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--glass-border); }
+        .nav-links a { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border: 1px solid var(--glass-border); border-radius: 0.5rem; font-size: 0.9rem; color: var(--text-secondary); background: var(--glass-bg); transition: all 0.2s; }
+        .nav-links a:hover { border-color: var(--accent-color); color: var(--accent-color); text-decoration: none; }
+        .footer { background: #000; border-top: 1px solid var(--glass-border); padding: 1.5rem 1rem; }
+        .footer-content { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; color: var(--text-secondary); }
+        .footer-content a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+        .footer-content a:hover { color: var(--accent-color); }
+        .footer-divider { width: 1px; height: 20px; background: var(--glass-border); }
+        @media (max-width: 640px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.25rem; }
+            .footer-content { flex-direction: column; gap: 0.5rem; }
+            .footer-divider { width: 24px; height: 1px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="/"><img src="/logotype.png" alt="" aria-hidden="true"><span>CAD<span class="agent">Agent</span></span></a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Natural Language CAD</h1>
+
+        <p>For decades, CAD software has been the definitive tool for turning engineering intent into manufacturable geometry. The problem has never been capability — modern parametric CAD can model nearly anything. The problem is the interface. Every extrusion, fillet, and hole pattern requires navigating menus, setting dialog parameters, and clicking through confirmation steps. Experienced engineers already know exactly what geometry they need. They just spend an inordinate amount of time telling the software about it.</p>
+
+        <p>Natural language CAD flips this interaction model. Instead of translating your intent into a sequence of UI operations, you describe the geometry you want in plain English and the software figures out which operations to execute. This is not about replacing CAD expertise — it is about removing the bottleneck between having a clear idea and having a solid model. <a href="/">CADAgent</a> is a free, open-source add-in for Fusion 360 that does exactly this: it takes a text description of what you want and generates real parametric features directly in your timeline.</p>
+
+        <h2>How natural language CAD works</h2>
+
+        <p>CADAgent runs as an add-in inside Autodesk Fusion 360. When you type a description — something like "create a rectangular plate with rounded corners and four countersunk mounting holes" — the add-in sends your input to the <a href="https://www.anthropic.com/" target="_blank" rel="noopener">Claude API</a> from Anthropic, along with context about your current design state. The AI model interprets your geometric intent and generates a sequence of Fusion 360 Python API calls that will produce the described geometry.</p>
+
+        <p>These are not abstract instructions or intermediate representations. The model outputs actual calls to the Fusion 360 API: creating sketches, defining profiles, extruding bodies, applying fillets, cutting holes, and adding patterns. Each call creates a parametric feature that appears in your Fusion 360 timeline in the correct order. The result is indistinguishable from features you would have created manually — because they are created through the same underlying API.</p>
+
+        <p>The key technical detail here is that the AI does not need to understand geometry in a mathematical sense. It needs to understand the mapping between English descriptions of mechanical features and the corresponding Fusion 360 API sequences. Claude is particularly strong at this because it reasons well about spatial relationships and has deep knowledge of CAD conventions. You bring your own API key, so there are no usage restrictions or subscription tiers beyond what Anthropic charges for tokens.</p>
+
+        <h2>Parametric output vs mesh generation</h2>
+
+        <p>This distinction matters and it is worth being explicit about. Most "AI 3D" tools you encounter today — text-to-3D generators, AI shape creators, generative design toys — produce <strong>mesh output</strong>. They give you an STL or OBJ file: a cloud of triangles that approximates a surface. Mesh geometry is essentially dead on arrival for engineering work. You cannot edit a dimension, add a fillet to an edge, or constrain a face to another part. You cannot feed it to a CNC machine without extensive cleanup. It is a picture of a shape, not a shape.</p>
+
+        <p>CADAgent outputs <strong>parametric features</strong>. Every sketch has editable dimensions and constraints. Every extrusion has a distance you can change. Every pattern has a count and spacing you can adjust. The entire feature history lives in the Fusion 360 timeline, meaning you can go back, modify an early feature, and watch downstream geometry update automatically. This is the difference between getting a rough prototype and getting a real engineering model that is ready for tolerancing, drawing generation, and manufacturing.</p>
+
+        <p>If you are evaluating AI CAD tools, this is the single most important question to ask: does it produce parametric features or mesh triangles? Everything downstream — editability, manufacturing readiness, design iteration speed — depends on that answer.</p>
+
+        <h2>What you can create</h2>
+
+        <p>CADAgent handles the kind of prismatic, feature-based geometry that makes up the majority of mechanical parts. Here are some real examples of prompts and what they produce:</p>
+
+        <ul>
+            <li><code>Create a 100x60x3mm plate with 4 M5 mounting holes at 80x40mm spacing</code> — generates a sketch, pad, and four hole features with correct positions and M5 sizing.</li>
+            <li><code>Extrude a 25mm tall cylinder, diameter 40mm, with 2mm fillets on top edges</code> — creates a circular sketch, extrusion, and fillet operation.</li>
+            <li><code>Make an L-bracket: 50mm vertical, 80mm horizontal, 3mm thick, with a 5mm fillet at the bend and two 4.2mm through holes on each leg</code> — builds the full bracket profile as a sketch, extrudes it, fillets the inner corner, and places the holes.</li>
+            <li><code>Add a 20x10mm rectangular pocket, 4mm deep, centered on the top face</code> — identifies the top face of the existing body and cuts a pocket into it.</li>
+            <li><code>Create a circular pattern of 6 M3 holes on a 30mm bolt circle</code> — generates a single hole and applies a circular pattern around the center.</li>
+        </ul>
+
+        <p>The add-in works iteratively: you can build a part step by step, with each prompt adding new features to the existing design. This matches how most engineers actually think about parts — as a sequence of operations rather than a monolithic shape.</p>
+
+        <h2>Limitations</h2>
+
+        <p>CADAgent is good at what it does, but it is not a general-purpose geometry engine, and being upfront about limitations saves everyone time.</p>
+
+        <ul>
+            <li><strong>No freeform or organic surfaces.</strong> If you need sculpted shapes, complex curvature, or Class A surfaces, this is not the right tool. CADAgent works with sketch-based, prismatic geometry — the kind of parts you would typically define with linear dimensions and standard features.</li>
+            <li><strong>No assemblies.</strong> The add-in operates on a single component at a time. It cannot create joints, mates, or multi-body assembly relationships. Assembly support is on the roadmap but is not available yet.</li>
+            <li><strong>No sheet metal.</strong> Bend allowances, K-factors, and flat pattern generation are not currently supported. Standard extrusions and cuts work fine, but dedicated sheet metal features are not yet implemented.</li>
+            <li><strong>Prompt specificity matters.</strong> Vague descriptions produce vague geometry. The more specific you are about dimensions, positions, and feature types, the better the output. Think of it as writing a clear engineering specification, not a creative brief.</li>
+            <li><strong>Complex topology can trip it up.</strong> Parts with many interdependent features or unusual reference geometry may require breaking the work into multiple prompts rather than a single complex description.</li>
+        </ul>
+
+        <p>The sweet spot is brackets, enclosures, mounting plates, adapter plates, simple housings, and structural components — the parts that make up the bulk of most mechanical assemblies and that are tedious to model manually despite being conceptually straightforward.</p>
+
+        <nav class="nav-links" aria-label="Related pages">
+            <a href="/">Home</a>
+            <a href="/install/">Install</a>
+            <a href="/fusion-360-ai-add-in/">Fusion 360 AI Add-in</a>
+            <a href="/use-cases/">Use Cases</a>
+            <a href="/about/">About</a>
+        </nav>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="/">CAD<span class="agent">Agent</span></a>
+            <span class="footer-divider"></span>
+            <a href="https://github.com/er-fo/CADAgent" target="_blank" rel="noopener">GitHub</a>
+            <span class="footer-divider"></span>
+            <a href="mailto:hi@cadagent.co">hi@cadagent.co</a>
+            <span class="footer-divider"></span>
+            <a href="/tos/">Terms</a>
+            <span class="footer-divider"></span>
+            <a href="/privacy/">Privacy</a>
+        </div>
+    </footer>
+</body>
+</html>

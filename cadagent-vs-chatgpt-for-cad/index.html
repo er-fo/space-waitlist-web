@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CADAgent vs ChatGPT for CAD – Why Parametric Matters</title>
+    <meta name="description" content="Can ChatGPT make CAD models? Not parametric ones. Learn why pasting prompts into ChatGPT doesn't produce real engineering geometry, and what CADAgent does instead."/>
+    <meta property="og:title" content="CADAgent vs ChatGPT for CAD – Why Parametric Matters"/>
+    <meta property="og:description" content="Can ChatGPT make CAD models? Not parametric ones. Learn why pasting prompts into ChatGPT doesn't produce real engineering geometry, and what CADAgent does instead."/>
+    <meta property="og:url" content="https://cadagent.co/cadagent-vs-chatgpt-for-cad/"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://cadagent.co/demo_image.png"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:image" content="https://cadagent.co/demo_image.png"/>
+    <link rel="canonical" href="https://cadagent.co/cadagent-vs-chatgpt-for-cad/"/>
+    <link rel="icon" type="image/png" sizes="any" href="/logotype.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-color: #0ea5e9;
+            --accent-hover: #38bdf8;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-primary);
+            background: #000;
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        body::before {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, rgba(14,165,233,0.025) 0%, rgba(56,189,248,0.02) 50%, rgba(14,165,233,0.025) 100%);
+            pointer-events: none; z-index: -1;
+        }
+        .header { border-bottom: 1px solid var(--glass-border); padding: 1.5rem 1rem; }
+        .header-inner { max-width: 1000px; margin: 0 auto; }
+        .header a { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 1rem; font-weight: 600; color: var(--text-primary); text-decoration: none; transition: color 0.2s; }
+        .header a:hover { color: var(--accent-color); }
+        .header img { width: 24px; height: 24px; }
+        .agent { font-weight: 200; }
+        .container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+        h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: -0.025em; }
+        h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.015em; }
+        p { margin-bottom: 1rem; color: var(--text-secondary); font-size: 1.05rem; }
+        a { color: var(--accent-color); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent-hover); text-decoration: underline; }
+        ul { margin-bottom: 1rem; padding-left: 1.5rem; color: var(--text-secondary); }
+        li { margin-bottom: 0.5rem; }
+        strong { color: var(--text-primary); font-weight: 600; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--glass-border); }
+        .nav-links a { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border: 1px solid var(--glass-border); border-radius: 0.5rem; font-size: 0.9rem; color: var(--text-secondary); background: var(--glass-bg); transition: all 0.2s; }
+        .nav-links a:hover { border-color: var(--accent-color); color: var(--accent-color); text-decoration: none; }
+        .footer { background: #000; border-top: 1px solid var(--glass-border); padding: 1.5rem 1rem; }
+        .footer-content { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; color: var(--text-secondary); }
+        .footer-content a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+        .footer-content a:hover { color: var(--accent-color); }
+        .footer-divider { width: 1px; height: 20px; background: var(--glass-border); }
+        @media (max-width: 640px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.25rem; }
+            .footer-content { flex-direction: column; gap: 0.5rem; }
+            .footer-divider { width: 24px; height: 1px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="/"><img src="/logotype.png" alt="" aria-hidden="true"><span>CAD<span class="agent">Agent</span></span></a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>CADAgent vs ChatGPT for CAD</h1>
+
+        <p>Many engineers have tried asking ChatGPT to make CAD models. You type something like "create a flanged bracket with four bolt holes," and you get back... a paragraph of text. Maybe some OpenSCAD code. Maybe an STL file if you push hard enough. The results are interesting, but they're not what you'd actually use in a production workflow. Here's why that gap exists, and what a purpose-built tool does differently.</p>
+
+        <h2>What happens when you ask ChatGPT to make a CAD model</h2>
+
+        <p>ChatGPT is a general-purpose language model. It knows a lot about CAD concepts and can discuss geometry intelligently, but it doesn't run inside any CAD environment. When you ask it to "make" a model, what you actually get falls into a few categories:</p>
+        <ul>
+            <li><strong>OpenSCAD or CadQuery scripts</strong> that you then have to copy, paste into another application, debug, and render yourself.</li>
+            <li><strong>Descriptions of geometry</strong> that read well but don't translate directly into features you can import.</li>
+            <li><strong>STL-generating code</strong> that produces mesh output — triangulated surfaces with no underlying intelligence.</li>
+        </ul>
+        <p>None of these give you a native parametric model. There's no timeline, no feature tree, no sketch constraints, and no way to go back and change a dimension without regenerating everything from scratch. You're essentially getting a recipe and being told to cook it yourself.</p>
+
+        <h2>The parametric difference</h2>
+
+        <p>This matters more than it might seem at first. In real engineering workflows, the initial shape is only the beginning. You need to modify fillet radii after running stress analysis. You need to adjust wall thickness when the material spec changes. You need to suppress a feature to create a simplified version for a different manufacturing process. Parametric models handle all of this because every feature knows what it depends on and how it was created.</p>
+        <p>Mesh files — STLs, OBJs, 3MFs — are what the industry calls <strong>dead geometry</strong>. They represent a shape as a cloud of triangles with no knowledge of how that shape was made. You can't edit a fillet radius on an STL because the fillet doesn't exist as a concept; it's just triangles that happen to form a curved surface. Try changing a bolt hole from M6 to M8 on a mesh file and you'll understand the problem immediately.</p>
+        <p>For prototyping and 3D printing, mesh files can be fine. But for anything headed toward CNC machining, injection molding, or sheet metal fabrication, your manufacturer needs parametric or at minimum STEP/BREP geometry. The model has to be more than a shape — it has to encode design intent.</p>
+
+        <h2>How CADAgent solves this</h2>
+
+        <p>CADAgent takes a fundamentally different approach. Instead of generating code that you run elsewhere, it operates <strong>directly inside Autodesk Fusion 360</strong> as a native add-in. When you describe geometry in natural language, CADAgent translates your description into actual Fusion 360 API calls that create real parametric features.</p>
+        <p>The result is a proper feature chain: a sketch gets created on a plane, an extrusion references that sketch, a fillet references edges on that extrusion. Every feature appears in your Fusion 360 timeline and is fully editable. You can double-click any feature to change its dimensions, reorder operations, or suppress features — exactly as if you'd created them manually.</p>
+        <p>Under the hood, CADAgent uses Anthropic's <strong>Claude</strong> (not ChatGPT) as its language model, specifically tuned for Fusion 360 API generation. The distinction matters: rather than producing generic geometry descriptions, the model outputs precise API calls that Fusion 360 understands natively. The result is real sketches with constraints, extrusions with properly defined extents, fillets with editable radii, and patterns with adjustable counts.</p>
+
+        <h2>When to use which</h2>
+
+        <p>ChatGPT and CADAgent aren't really competitors — they solve different problems. Here's a practical breakdown:</p>
+        <ul>
+            <li><strong>Use ChatGPT</strong> when you want to learn CAD concepts, brainstorm design approaches, generate OpenSCAD or CadQuery scripts for quick visualizations, or get help understanding manufacturing processes. It's an excellent engineering assistant for knowledge work.</li>
+            <li><strong>Use CADAgent</strong> when you need to create actual parametric geometry inside Fusion 360 that you'll refine, document, and manufacture. When the output needs to be a real, editable CAD model — not a script or a mesh — that's what CADAgent is built for.</li>
+        </ul>
+        <p>The best workflow for many engineers is using both: ChatGPT to think through a design problem and explore options, then CADAgent to build the actual geometry once you know what you want. Different stages of the design process call for different tools.</p>
+        <p>If you're ready to try generating real parametric CAD from natural language, <a href="/install/">install CADAgent</a> and see the difference for yourself.</p>
+
+        <nav class="nav-links" aria-label="Related pages">
+            <a href="/">Home</a>
+            <a href="/install/">Install</a>
+            <a href="/fusion-360-ai-add-in/">Fusion 360 AI Add-in</a>
+            <a href="/natural-language-cad/">Natural Language CAD</a>
+            <a href="/use-cases/">Use Cases</a>
+        </nav>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="/">CAD<span class="agent">Agent</span></a>
+            <span class="footer-divider"></span>
+            <a href="https://github.com/er-fo/CADAgent" target="_blank" rel="noopener">GitHub</a>
+            <span class="footer-divider"></span>
+            <a href="mailto:hi@cadagent.co">hi@cadagent.co</a>
+            <span class="footer-divider"></span>
+            <a href="/tos/">Terms</a>
+            <span class="footer-divider"></span>
+            <a href="/privacy/">Privacy</a>
+        </div>
+    </footer>
+</body>
+</html>
